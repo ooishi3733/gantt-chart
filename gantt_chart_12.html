@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2080%2080%22%3E%0A%20%20%3Crect%20width%3D%2280%22%20height%3D%2280%22%20rx%3D%2218%22%20fill%3D%22%231e293b%22%2F%3E%0A%20%20%3Cline%20x1%3D%2214%22%20y1%3D%2230%22%20x2%3D%2266%22%20y2%3D%2230%22%20stroke%3D%22%23fde68a%22%20stroke-width%3D%22.6%22%20opacity%3D%22.3%22%2F%3E%0A%20%20%3Cline%20x1%3D%2214%22%20y1%3D%2242%22%20x2%3D%2266%22%20y2%3D%2242%22%20stroke%3D%22%23fde68a%22%20stroke-width%3D%22.6%22%20opacity%3D%22.3%22%2F%3E%0A%20%20%3Cline%20x1%3D%2214%22%20y1%3D%2254%22%20x2%3D%2266%22%20y2%3D%2254%22%20stroke%3D%22%23fde68a%22%20stroke-width%3D%22.6%22%20opacity%3D%22.3%22%2F%3E%0A%20%20%3Cline%20x1%3D%2214%22%20y1%3D%2266%22%20x2%3D%2266%22%20y2%3D%2266%22%20stroke%3D%22%23fde68a%22%20stroke-width%3D%22.6%22%20opacity%3D%22.3%22%2F%3E%0A%20%20%3Cline%20x1%3D%2230%22%20y1%3D%2220%22%20x2%3D%2230%22%20y2%3D%2268%22%20stroke%3D%22%23fde68a%22%20stroke-width%3D%22.6%22%20opacity%3D%22.3%22%2F%3E%0A%20%20%3Cline%20x1%3D%2246%22%20y1%3D%2220%22%20x2%3D%2246%22%20y2%3D%2268%22%20stroke%3D%22%23fde68a%22%20stroke-width%3D%22.6%22%20opacity%3D%22.3%22%2F%3E%0A%20%20%3Cline%20x1%3D%2262%22%20y1%3D%2220%22%20x2%3D%2262%22%20y2%3D%2268%22%20stroke%3D%22%23fde68a%22%20stroke-width%3D%22.6%22%20opacity%3D%22.3%22%2F%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2231%22%20width%3D%2232%22%20height%3D%2210%22%20rx%3D%222%22%20fill%3D%22%23fbbf24%22%2F%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%2243%22%20width%3D%2232%22%20height%3D%2210%22%20rx%3D%222%22%20fill%3D%22%23f97316%22%2F%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2255%22%20width%3D%2216%22%20height%3D%2210%22%20rx%3D%222%22%20fill%3D%22%23fde68a%22%2F%3E%0A%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>工程管理システム</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#fff;--bg2:#f8f8f6;--bg3:#f1efe8;
+  --text:#1a1a18;--text2:#5f5e5a;--text3:#888780;
+  --border:#e0ddd5;--border2:#ccc9c0;
+  --blue:#185fa5;--green:#0f6e56;--brown:#854f0b;--pink:#993556;--purple:#534ab7;
+  --red:#e24b4a;--warn:#ef9f27;
+  --info-bg:#e6f1fb;--info-text:#0c447c;--info-border:#85b7eb;
+  --danger-bg:#fcebeb;--danger-text:#791f1f;--danger-border:#f09595;
+  --warn-bg:#faeeda;--warn-text:#633806;--warn-border:#ef9f27;
+  --r:8px;--rl:12px;--lw:210px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:13px;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+.topnav{display:flex;align-items:center;gap:0;height:42px;border-bottom:1px solid var(--border);padding:0 14px;flex-shrink:0;}
+.topnav-title{font-size:14px;font-weight:700;margin-right:14px;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.tab-btn{padding:0 14px;height:42px;border:none;background:none;cursor:pointer;font-size:12px;color:var(--text2);border-bottom:2px solid transparent;display:flex;align-items:center;gap:4px;white-space:nowrap;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600;}
+.topnav-right{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.screen{display:none;flex:1;flex-direction:column;min-height:0;overflow:hidden;}
+.screen.active{display:flex;}
+.toolbar{display:flex;align-items:center;gap:5px;padding:7px 12px 6px;flex-shrink:0;flex-wrap:wrap;border-bottom:1px solid var(--border);background:var(--bg);}
+button{font-size:12px;padding:4px 9px;border:1px solid var(--border2);background:var(--bg);color:var(--text);border-radius:var(--r);cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:background .12s;white-space:nowrap;}
+button:hover{background:var(--bg2);}
+button.primary{background:var(--info-bg);color:var(--info-text);border-color:var(--info-border);}
+button.warn-btn{background:var(--warn-bg);color:var(--warn-text);border-color:var(--warn-border);}
+button.danger-btn{background:var(--danger-bg);color:var(--danger-text);border-color:var(--danger-border);}
+button.promote-btn{background:#e1f5ee;color:#085041;border-color:#5dcaa5;}
+button.copy-btn{background:#f3f0ff;color:#534ab7;border-color:#a5b4fc;}
+button.active-seg{background:var(--info-bg);color:var(--info-text);border-color:var(--info-border);}
+select,input[type=date]{font-size:12px;padding:4px 8px;border:1px solid var(--border2);background:var(--bg);color:var(--text);border-radius:var(--r);cursor:pointer;}
+.sep{width:1px;height:20px;background:var(--border);flex-shrink:0;margin:0 1px;}
+.seg-group{display:flex;border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;}
+.seg-group button{border:none;border-right:1px solid var(--border2);border-radius:0;padding:4px 9px;}
+.seg-group button:last-child{border-right:none;}
+.seg-group button.active-seg{background:var(--info-bg);color:var(--info-text);}
+.legend{display:flex;gap:9px;flex-wrap:wrap;padding:4px 12px;flex-shrink:0;align-items:center;font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);}
+.legend-item{display:flex;align-items:center;gap:3px;}
+.lc{width:16px;height:6px;border-radius:2px;}
+/* GANTT */
+.gantt-container{flex:1;display:flex;flex-direction:column;min-height:0;}
+.gantt-outer{flex:1;display:flex;min-height:0;overflow:hidden;}
+.label-col{width:var(--lw);flex-shrink:0;display:flex;flex-direction:column;border-right:2px solid var(--border2);overflow:hidden;z-index:10;background:var(--bg);position:relative;}
+.lc-resize{position:absolute;right:-4px;top:0;bottom:0;width:8px;cursor:col-resize;z-index:20;background:transparent;}
+.lc-resize:hover,.lc-resize.dragging{background:rgba(55,138,221,.25);}
+.label-col-hd{height:56px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:600;color:var(--text2);flex-shrink:0;}
+.label-col-body{flex:1;overflow:hidden;position:relative;}
+.label-rows{position:absolute;top:0;left:0;right:0;}
+.chart-col{flex:1;overflow:auto;position:relative;}
+.chart-col.grabbing{cursor:grabbing !important;}
+.chart-inner{display:inline-block;min-width:100%;}
+.chart-hd{position:sticky;top:0;z-index:15;background:var(--bg2);border-bottom:1px solid var(--border);}
+.hrow{display:flex;border-bottom:1px solid var(--border);}
+.hrow:last-child{border-bottom:none;}
+.hrow.mh-row{height:20px;}
+.hrow.wh-row{height:18px;}
+.hrow.dh-row{height:18px;}
+.hcell{text-align:center;border-right:1px solid var(--border);flex-shrink:0;overflow:hidden;}
+.hcell.mh{font-size:11px;font-weight:600;color:var(--text2);padding:3px 0;}
+.hcell.wh{font-size:10px;color:var(--text3);padding:2px 0;}
+.hcell.dh{color:var(--text3);padding:1px 0;line-height:1.3;font-size:9px;}
+.hcell.sun{background:#fff0f0;color:#c00;}
+.hcell.sat{background:#f0f4ff;color:#006;}
+.hcell.hol{background:#fff0f8;color:#900;}
+.hcell.tday{background:#e6f1fb;color:#0c447c;font-weight:700;}
+.label-row{display:flex;align-items:center;padding:0 8px;gap:5px;border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;background:var(--bg);}
+.label-row.plrow{background:var(--bg2);font-weight:700;}
+.label-row.slrow{background:#fffbf4;}
+.chart-row{position:relative;border-bottom:1px solid var(--border);overflow:hidden;}
+.chart-row.pcrow{background:var(--bg2);}
+.chart-row.scrow{background:#fffbf4;}
+.col-bg{position:absolute;top:0;bottom:0;pointer-events:none;z-index:0;}
+.today-line{position:absolute;top:0;bottom:0;width:2px;background:#378add;z-index:9;pointer-events:none;}
+.today-lbl{position:absolute;top:1px;left:3px;font-size:8px;font-weight:700;color:#378add;white-space:nowrap;}
+.deadline-ln{position:absolute;top:0;bottom:0;width:2px;background:#e24b4a;z-index:7;pointer-events:none;}
+.deadline-fl{position:absolute;top:1px;font-size:8px;font-weight:600;padding:1px 2px;border-radius:2px;background:#e24b4a;color:#fff;z-index:8;pointer-events:none;}
+.gbar{position:absolute;border-radius:3px;display:flex;align-items:center;padding:0 4px;font-size:9px;font-weight:600;white-space:nowrap;cursor:grab;user-select:none;z-index:2;overflow:hidden;}
+.gbar:active{cursor:grabbing;}
+.gbar.tbar{height:56%;top:22%;}
+.gbar.pbar{height:50%;top:25%;border-radius:3px;cursor:default;background:#d8d6d0;color:#3a3a38;}
+.gbar.ghost{height:56%;top:22%;border:2px dashed;background:transparent;cursor:pointer;}
+.pf{position:absolute;left:0;top:0;height:100%;border-radius:3px;opacity:.25;background:#fff;pointer-events:none;}
+.blt{position:relative;z-index:1;pointer-events:none;overflow:hidden;text-overflow:ellipsis;}
+.rh{position:absolute;right:0;top:0;width:7px;height:100%;cursor:ew-resize;z-index:3;}
+.rh:hover{background:rgba(255,255,255,.3);}
+.ddpop{position:fixed;background:#1a1a18;color:#fff;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600;pointer-events:none;z-index:9999;display:none;white-space:nowrap;}
+/* HOLDING */
+.holding{flex-shrink:0;border-top:2px dashed var(--warn);background:var(--bg2);max-height:200px;}
+.holding-hd{display:flex;align-items:center;gap:6px;padding:5px 12px 4px;cursor:pointer;user-select:none;}
+.holding-cards{display:flex;gap:7px;padding:0 12px 7px;flex-wrap:wrap;overflow-y:auto;max-height:150px;}
+.sc{background:var(--bg);border:1px solid var(--border);border-radius:var(--rl);padding:7px 10px;min-width:140px;max-width:180px;cursor:pointer;}
+.sc:hover{border-color:var(--warn);}
+.sc-hd{display:flex;align-items:center;gap:3px;margin-bottom:3px;}
+.sc-name{font-size:11px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sc-row{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--text2);margin-top:2px;}
+.sc-row span{color:var(--text);}
+.sc-add{min-width:34px;max-width:34px;height:34px;border:2px dashed var(--border2);border-radius:var(--rl);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);font-size:18px;background:transparent;align-self:center;}
+.sc-add:hover{border-color:var(--warn);color:var(--warn-text);}
+/* TOOLTIP */
+.tooltip{position:fixed;background:var(--bg);border:1px solid var(--border2);border-radius:var(--r);padding:8px 12px;font-size:12px;pointer-events:none;z-index:9998;display:none;min-width:175px;box-shadow:0 4px 16px rgba(0,0,0,.12);}
+.tt-t{font-weight:700;margin-bottom:4px;font-size:12px;}
+.tt-r{display:flex;justify-content:space-between;gap:12px;color:var(--text2);margin-top:2px;}
+.tt-r span:last-child{color:var(--text);font-weight:500;}
+.tt-b{margin-top:4px;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.tt-f{height:100%;border-radius:2px;}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:300;display:none;align-items:center;justify-content:center;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--bg);border-radius:var(--rl);border:1px solid var(--border);padding:20px;width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.15);}
+.modal h3{font-size:15px;font-weight:700;margin-bottom:13px;display:flex;align-items:center;gap:7px;}
+.modal label{font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:3px;margin-top:10px;text-transform:uppercase;letter-spacing:.03em;}
+.modal input[type=text],.modal input[type=date],.modal input[type=number],.modal select,.modal textarea{width:100%;padding:6px 9px;font-size:13px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);}
+.modal input:focus,.modal select:focus,.modal textarea:focus{outline:none;border-color:var(--info-border);box-shadow:0 0 0 3px rgba(55,138,221,.1);}
+.modal-note{border-radius:var(--r);padding:7px 10px;font-size:11px;margin-bottom:4px;}
+.modal-btns{display:flex;gap:6px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap;}
+.prg-row{display:flex;align-items:center;gap:6px;}
+.prg-row input[type=range]{flex:1;}
+.prg-row span{font-size:12px;font-weight:600;min-width:30px;text-align:right;}
+/* step indicator */
+.step-bar{display:flex;align-items:center;gap:0;margin-bottom:14px;}
+.step-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);}
+.step-item.active{color:var(--blue);font-weight:600;}
+.step-item.done{color:var(--green);}
+.step-num{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;background:var(--bg);}
+.step-item.active .step-num{border-color:var(--blue);color:var(--blue);background:var(--info-bg);}
+.step-item.done .step-num{border-color:var(--green);background:#e1f5ee;color:var(--green);}
+.step-sep{width:24px;height:1.5px;background:var(--border2);margin:0 3px;}
+/* prod list in step2 */
+.prod-sel-list{max-height:160px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--r);margin-top:6px;}
+.prod-sel-item{padding:8px 12px;border-bottom:1px solid var(--border);cursor:pointer;font-size:12px;display:flex;align-items:center;gap:8px;}
+.prod-sel-item:last-child{border-bottom:none;}
+.prod-sel-item:hover{background:var(--info-bg);}
+.prod-sel-item.selected{background:var(--info-bg);font-weight:600;}
+/* copy panel */
+.copy-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:10px;margin-top:8px;}
+.copy-list{max-height:120px;overflow-y:auto;margin-top:6px;}
+.copy-item{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:5px;cursor:pointer;font-size:12px;}
+.copy-item:hover{background:var(--bg3);}
+.copy-item.selected{background:var(--info-bg);}
+/* prod-sales modal */
+.psl{max-height:240px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--r);margin-top:5px;}
+.psl-item{display:flex;align-items:center;padding:5px 9px;border-bottom:1px solid var(--border);font-size:12px;gap:8px;}
+.psl-item:last-child{border-bottom:none;}
+.psl-prod{min-width:100px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.psl-sales input{flex:1;padding:3px 6px;font-size:12px;border:1px solid var(--border2);border-radius:5px;width:100%;}
+/* hol modal */
+.hol-list{max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--r);margin-top:5px;}
+.hol-item{display:flex;align-items:center;justify-content:space-between;padding:4px 9px;border-bottom:1px solid var(--border);font-size:12px;}
+.hol-item:last-child{border-bottom:none;}
+.hol-del{cursor:pointer;color:var(--danger-text);background:none;border:none;font-size:12px;padding:0 2px;}
+.hol-add-row{display:flex;gap:5px;margin-top:5px;}
+/* TOAST */
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%) translateY(50px);background:var(--text);color:var(--bg);padding:6px 15px;border-radius:16px;font-size:12px;font-weight:500;z-index:9999;opacity:0;transition:all .22s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.fv-btn{font-size:11px;padding:2px 7px;border:1px solid var(--fvc,#888);color:var(--fvc,#888);background:transparent;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:3px;opacity:.45;transition:opacity .12s,background .12s;}
+.fv-btn.fv-on{opacity:1;background:color-mix(in srgb,var(--fvc,#888) 12%,white);}
+.fv-btn:hover{opacity:1;}
+.fv-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--fvc,#888);flex-shrink:0;}
+.btn-sync{background:#f0fdf4;color:#166534;border-color:#86efac;}
+.btn-sync:hover{background:#dcfce7;}
+.sync-status{font-size:10px;padding:3px 8px;border-radius:10px;white-space:nowrap;}
+.sync-ok{background:#dcfce7;color:#166534;}
+.sync-err{background:#fee2e2;color:#991b1b;}
+.sync-ing{background:#e0f2fe;color:#075985;}
+.ctx-item{padding:7px 13px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;}
+.ctx-item:hover{background:var(--info-bg);color:var(--info-text);}
+/* DASHBOARD */
+.dash-tb{display:flex;align-items:center;gap:7px;padding:7px 12px 6px;flex-shrink:0;flex-wrap:wrap;border-bottom:1px solid var(--border);}
+.dash{flex:1;overflow-y:auto;padding:14px;}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;}
+.dc{background:var(--bg);border:1px solid var(--border);border-radius:var(--rl);padding:14px;}
+.dc.full{grid-column:1/-1;}
+.dc h4{font-size:12px;font-weight:600;margin-bottom:10px;color:var(--text2);display:flex;align-items:center;gap:5px;}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.kpi{background:var(--bg2);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border);}
+.kpi-val{font-size:22px;font-weight:700;}
+.kpi-lbl{font-size:10px;color:var(--text2);margin-top:1px;}
+.pi{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.pi-name{font-size:11px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pi-bar{flex:2;height:7px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.pi-fill{height:100%;border-radius:3px;}
+.pi-pct{font-size:10px;font-weight:600;min-width:28px;text-align:right;}
+.sbadge{font-size:9px;font-weight:600;padding:1px 5px;border-radius:8px;white-space:nowrap;}
+.cat-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.cat-bw{flex:1;height:9px;background:var(--bg3);border-radius:4px;overflow:hidden;}
+.cat-b{height:100%;border-radius:4px;}
+.bar-chart{display:flex;align-items:flex-end;gap:3px;height:90px;margin-top:4px;}
+.bc-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.bc-bars{width:100%;display:flex;flex-direction:column;justify-content:flex-end;height:70px;}
+.bc-bar{width:100%;border-radius:2px 2px 0 0;min-height:1px;}
+.bc-lbl{font-size:8px;color:var(--text3);text-align:center;}
+.dt{width:100%;border-collapse:collapse;font-size:11px;}
+.dt th{padding:5px 8px;text-align:left;border-bottom:1px solid var(--border);font-weight:600;color:var(--text2);background:var(--bg2);}
+.dt td{padding:5px 8px;border-bottom:1px solid var(--border);}
+.dt tr:last-child td{border-bottom:none;}
+.dt tr:hover td{background:var(--bg2);}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <div class="topnav-title"><i class="ti ti-chart-gantt"></i> 工程管理システム</div>
+  <button class="tab-btn active" id="tab-gantt" onclick="switchTab('gantt')"><i class="ti ti-calendar-stats"></i> 工程管理</button>
+  <button class="tab-btn" id="tab-dash" onclick="switchTab('dash')"><i class="ti ti-dashboard"></i> ダッシュボード</button>
+  <div class="topnav-right">
+    <button onclick="exportJSON()"><i class="ti ti-download"></i> エクスポート</button>
+    <button onclick="document.getElementById('importInput').click()"><i class="ti ti-upload"></i> インポート</button>
+    <input type="file" id="importInput" accept=".json" style="display:none" onchange="importJSON(event)">
+    <button class="btn-sync" onclick="openSyncModal()" title="SharePointと同期"><i class="ti ti-cloud"></i> SharePoint同期</button>
+    <div style="text-align:right;">
+      <div style="font-size:11px;color:var(--text2);white-space:nowrap;"><strong id="todayLabel"></strong></div>
+      <div style="font-size:9px;color:var(--text3);white-space:nowrap;" id="lastSavedLabel">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- GANTT SCREEN -->
+<div class="screen active" id="screen-gantt">
+  <div class="toolbar">
+    <button class="primary" onclick="openProductModal()"><i class="ti ti-plus"></i> 新規登録</button>
+    <button class="warn-btn" onclick="openSoonModal()"><i class="ti ti-star"></i> 商品化待ち追加</button>
+    <div class="sep"></div>
+    <select id="filterCat" onchange="render()">
+      <option value="">全カテゴリ</option>
+      <option>本型</option><option>本型追加工</option><option>試作型</option><option>１列試作</option><option>工場用品</option>
+    </select>
+    <select id="filterSales" onchange="render()"><option value="">営業担当: 全員</option></select>
+    <div class="sep"></div>
+    <button onclick="collapseAll(true)"><i class="ti ti-fold"></i> 全閉</button>
+    <button onclick="collapseAll(false)"><i class="ti ti-fold-up"></i> 全開</button>
+    <div class="sep"></div>
+    <div class="seg-group">
+      <button id="vs-day" onclick="setVM('day')">日</button>
+      <button id="vs-week" class="active-seg" onclick="setVM('week')">週</button>
+      <button id="vs-month" onclick="setVM('month')">月</button>
+      <button id="vs-quarter" onclick="setVM('quarter')">期</button>
+    </div>
+    <div class="seg-group">
+      <button onclick="navShift(-1)">◀ 前月</button>
+      <button onclick="navToday()">今月</button>
+      <button onclick="navShift(1)">翌月 ▶</button>
+    </div>
+    <div class="sep"></div>
+    <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2);">
+      <input type="date" id="rangeStart" onchange="onRangeChange()" style="font-size:11px;padding:3px 6px;">
+      <span>〜</span>
+      <input type="date" id="rangeEnd" onchange="onRangeChange()" style="font-size:11px;padding:3px 6px;">
+    </div>
+    <div class="sep"></div>
+    <button onclick="openHolModal()"><i class="ti ti-calendar-off"></i> 休日設定</button>
+  </div>
+  <div class="legend" id="legendBar">
+    <button id="fv-切削"  onclick="toggleFV('切削')"  class="fv-btn fv-on" style="--fvc:#185fa5;"><span class="fv-dot"></span>切削</button>
+    <button id="fv-穴あけ" onclick="toggleFV('穴あけ')" class="fv-btn fv-on" style="--fvc:#0f6e56;"><span class="fv-dot"></span>穴あけ</button>
+    <button id="fv-研磨"  onclick="toggleFV('研磨')"  class="fv-btn fv-on" style="--fvc:#854f0b;"><span class="fv-dot"></span>研磨</button>
+    <button id="fv-洗浄"  onclick="toggleFV('洗浄')"  class="fv-btn fv-on" style="--fvc:#993556;"><span class="fv-dot"></span>洗浄</button>
+    <button id="fv-納期"  onclick="toggleFV('納期')"  class="fv-btn fv-on" style="--fvc:#e24b4a;"><span class="fv-dot" style="border-radius:1px;height:4px;margin-top:1px;"></span>納期</button>
+    <button id="fv-商品化待ち" onclick="toggleFV('商品化待ち')" class="fv-btn fv-on" style="--fvc:#854f0b;"><span class="fv-dot" style="background:transparent;border:1.5px dashed #854f0b;"></span>商品化待ち</button>
+    <div class="sep" style="height:14px;"></div>
+    <div class="legend-item"><span style="display:inline-block;width:10px;height:10px;background:#fff0f0;border:1px solid #ecc;border-radius:2px;"></span> 日</div>
+    <div class="legend-item"><span style="display:inline-block;width:10px;height:10px;background:#f0f4ff;border:1px solid #cce;border-radius:2px;"></span> 土</div>
+    <div class="legend-item"><span style="display:inline-block;width:10px;height:10px;background:#fff0f8;border:1px solid #ecc;border-radius:2px;"></span> 祝</div>
+    <span style="margin-left:auto;font-size:10px;color:var(--text3);">バードラッグ→日程変更 | 右端→期間変更 | クリック→編集 | 製品名右クリック→メニュー</span>
+  </div>
+  <div class="gantt-container">
+    <div class="gantt-outer">
+      <div class="label-col" id="labelCol">
+        <div class="label-col-hd">製品 / 工程</div>
+        <div class="label-col-body"><div class="label-rows" id="labelRows"></div></div>
+        <div class="lc-resize" id="lcResize" title="ドラッグで幅を変更"></div>
+      </div>
+      <div class="chart-col" id="chartCol">
+        <div class="chart-inner" id="chartInner">
+          <div class="chart-hd" id="chartHd"></div>
+          <div id="chartRows"></div>
+        </div>
+      </div>
+    </div>
+    <div class="holding" id="holdingZone">
+      <div class="holding-hd" onclick="toggleHolding()">
+        <i class="ti ti-star" style="font-size:12px;color:var(--warn);"></i>
+        <span style="font-size:12px;font-weight:700;color:var(--warn-text);">もうすぐ商品化！</span>
+        <span id="holdCount" style="font-size:10px;background:var(--warn-bg);color:var(--warn-text);border-radius:10px;padding:1px 6px;font-weight:600;">0件</span>
+        <span style="font-size:10px;color:var(--text3);margin-left:3px;">クリックで詳細・工程登録への昇格</span>
+        <span id="holdIcon" style="margin-left:auto;font-size:11px;color:var(--text3);"><i class="ti ti-chevron-up"></i></span>
+      </div>
+      <div class="holding-cards" id="holdCards"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD SCREEN -->
+<div class="screen" id="screen-dash">
+  <div class="dash-tb">
+    <span style="font-size:12px;font-weight:600;">期間:</span>
+    <div class="seg-group">
+      <button id="dp-month" onclick="setDP('month')">月別</button>
+      <button id="dp-year" class="active-seg" onclick="setDP('year')">年別</button>
+      <button id="dp-h1" onclick="setDP('h1')">上期(6-11月)</button>
+      <button id="dp-h2" onclick="setDP('h2')">下期(12-5月)</button>
+    </div>
+    <div class="sep"></div>
+    <select id="dashSalesF" onchange="buildDashboard()"><option value="">営業担当: 全員</option></select>
+    <select id="dashCatF" onchange="buildDashboard()">
+      <option value="">全カテゴリ</option>
+      <option>本型</option><option>本型追加工</option><option>試作型</option><option>１列試作</option><option>工場用品</option>
+    </select>
+  </div>
+  <div class="dash" id="dashContent"></div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+<div class="ddpop" id="ddpop"></div>
+
+<!-- ===== PRODUCT REGISTRATION MODAL (Step1+2+3) ===== -->
+<!-- Context Menu -->
+<div id="ctxMenu" style="position:fixed;display:none;background:var(--bg);border:1px solid var(--border2);border-radius:var(--r);box-shadow:0 4px 16px rgba(0,0,0,.14);z-index:9000;min-width:160px;overflow:hidden;">
+  <div class="ctx-item" onclick="ctxDuplicate()"><i class="ti ti-copy"></i> この製品を複製</div>
+  <div class="ctx-item" onclick="ctxAddTask()"><i class="ti ti-plus"></i> 工程を追加</div>
+  <div style="height:1px;background:var(--border);margin:2px 0;"></div>
+  <div class="ctx-item" onclick="ctxEdit()"><i class="ti ti-edit"></i> 製品情報を編集</div>
+  <div class="ctx-item" onclick="ctxAddEvent()"><i class="ti ti-flag"></i> イベントを追加</div>
+  <div class="ctx-item" style="color:var(--danger-text);" onclick="ctxDelete()"><i class="ti ti-trash"></i> 製品を削除</div>
+</div>
+<div class="modal-bg" id="prodModalBg">
+  <div class="modal" style="width:460px;">
+    <h3 id="prodModalTitle"><i class="ti ti-package" style="color:var(--blue);"></i> 製品を新規登録</h3>
+    <div class="step-bar" id="stepBar">
+      <div class="step-item active" id="step1-ind"><div class="step-num">1</div><span>製品情報</span></div>
+      <div class="step-sep"></div>
+      <div class="step-item" id="step2-ind"><div class="step-num">2</div><span>工程追加</span></div>
+    </div>
+    <!-- STEP 1: Product info -->
+    <div id="prodStep1">
+      <label>製品名 <span style="color:var(--red);">*</span></label>
+      <input id="pName" type="text" placeholder="例: 海老フライ型（大）">
+      <label>カテゴリ</label>
+      <select id="pCat"><option>本型</option><option>本型追加工</option><option>試作型</option><option>１列試作</option><option>工場用品</option></select>
+      <label>営業担当者</label>
+      <input id="pSales" type="text" placeholder="例: 田中 花子">
+      <label>納期</label>
+      <input id="pDeadline" type="date">
+      <label>メモ</label>
+      <textarea id="pMemo" rows="2" placeholder="例: 客先確認済み、特急対応"></textarea>
+      <div class="modal-btns">
+        <button onclick="closeModal('prodModalBg')">キャンセル</button>
+        <button class="primary" onclick="prodStep1Next()">次へ：工程を追加 <i class="ti ti-arrow-right"></i></button>
+      </div>
+    </div>
+    <!-- STEP 2: Add tasks -->
+    <div id="prodStep2" style="display:none;">
+      <div id="prodStep2Info" style="background:var(--bg2);border-radius:var(--r);padding:8px 12px;margin-bottom:10px;font-size:12px;"></div>
+      <!-- Copy panel -->
+      <div style="margin-bottom:8px;">
+        <button class="copy-btn" onclick="toggleCopyPanel()" id="copyPanelBtn"><i class="ti ti-copy"></i> 既存工程からコピー</button>
+        <div class="copy-panel" id="copyPanel" style="display:none;">
+          <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">コピー元の製品を選択してください。選択した製品の工程をこの製品にコピーします。</div>
+          <select id="copySrcProd" onchange="renderCopyList()" style="width:100%;margin-bottom:6px;"><option value="">製品を選択...</option></select>
+          <div class="copy-list" id="copyList"></div>
+          <button class="primary" style="margin-top:8px;width:100%;" onclick="execCopyTasks()"><i class="ti ti-clipboard-check"></i> 選択した工程をコピーして追加</button>
+        </div>
+      </div>
+      <!-- New task form -->
+      <div style="background:var(--info-bg);border:1px solid var(--info-border);border-radius:var(--r);padding:10px;margin-bottom:8px;">
+        <div style="font-size:11px;font-weight:600;color:var(--info-text);margin-bottom:8px;">新しい工程を追加</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div>
+            <label style="font-size:10px;color:var(--text2);display:block;margin-bottom:2px;">工程名</label>
+            <select id="tTask" onchange="toggleMF()" style="width:100%;font-size:12px;padding:4px 7px;">
+              <option>切削</option><option>穴あけ</option><option>研磨</option><option>洗浄</option>
+            </select>
+          </div>
+          <div id="tMachWrap">
+            <label style="font-size:10px;color:var(--text2);display:block;margin-bottom:2px;">機械</label>
+            <select id="tMach" style="width:100%;font-size:12px;padding:4px 7px;">
+              <option value="">未割当</option><option value="V56">V56</option><option value="ROBO">ROBO</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:10px;color:var(--text2);display:block;margin-bottom:2px;">開始日</label>
+            <input id="tStart" type="date" style="width:100%;font-size:12px;padding:4px 7px;">
+          </div>
+          <div>
+            <label style="font-size:10px;color:var(--text2);display:block;margin-bottom:2px;">終了日</label>
+            <input id="tEnd" type="date" style="width:100%;font-size:12px;padding:4px 7px;">
+          </div>
+          <div>
+            <label style="font-size:10px;color:var(--text2);display:block;margin-bottom:2px;">作業担当者</label>
+            <input id="tPerson" type="text" placeholder="山田" style="width:100%;font-size:12px;padding:4px 7px;">
+          </div>
+          <div>
+            <label style="font-size:10px;color:var(--text2);display:block;margin-bottom:2px;">進捗(%)</label>
+            <input id="tPrg" type="number" min="0" max="100" value="0" style="width:100%;font-size:12px;padding:4px 7px;">
+          </div>
+        </div>
+        <button class="primary" style="margin-top:8px;width:100%;" onclick="addTaskToNew()"><i class="ti ti-plus"></i> この工程を追加</button>
+      </div>
+      <!-- Added tasks list -->
+      <div id="addedTasksList" style="max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--r);background:var(--bg2);"></div>
+      <div class="modal-btns">
+        <button onclick="prodStep2Back()"><i class="ti ti-arrow-left"></i> 戻る</button>
+        <button onclick="closeModal('prodModalBg')">後で追加</button>
+        <button class="primary" onclick="prodStep2Save()"><i class="ti ti-check"></i> 登録完了</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TASK EDIT MODAL -->
+<div class="modal-bg" id="taskModalBg">
+  <div class="modal">
+    <h3 id="taskModalTitle"><i class="ti ti-edit" style="color:var(--blue);"></i> 工程を編集</h3>
+    <label>製品名</label>
+    <select id="eProduct" style="width:100%;font-size:13px;padding:6px 9px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);"></select>
+    <label>工程名</label>
+    <select id="eTask" onchange="toggleEMF()"><option>切削</option><option>穴あけ</option><option>研磨</option><option>洗浄</option></select>
+    <div id="eMachWrap">
+      <label>使用機械</label>
+      <select id="eMach"><option value="">未割当</option><option value="V56">V56</option><option value="ROBO">ROBO</option></select>
+    </div>
+    <label>作業担当者（管理用・非表示）</label>
+    <input id="ePerson" type="text" placeholder="例: 山田">
+    <label>開始日</label><input id="eStart" type="date">
+    <label>終了日</label><input id="eEnd" type="date">
+    <label>進捗</label>
+    <div class="prg-row">
+      <input type="range" id="ePrg" min="0" max="100" step="5" value="0" oninput="document.getElementById('ePrgV').textContent=this.value+'%'">
+      <span id="ePrgV">0%</span>
+    </div>
+    <label>メモ</label>
+    <input id="eMemo" type="text" placeholder="例: 外注対応、要確認">
+    <div class="modal-btns">
+      <button class="danger-btn" id="eDeleteBtn" onclick="deleteTask()" style="margin-right:auto;"><i class="ti ti-trash"></i> 削除</button>
+      <button class="copy-btn" onclick="duplicateTask()"><i class="ti ti-copy"></i> 複製</button>
+      <button onclick="closeModal('taskModalBg')">キャンセル</button>
+      <button class="primary" onclick="saveTask()"><i class="ti ti-check"></i> 保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- SOON MODAL -->
+<div class="modal-bg" id="soonModalBg">
+  <div class="modal">
+    <h3 id="soonModalTitle"><i class="ti ti-star" style="color:var(--warn);"></i> 商品化待ち</h3>
+    <div class="modal-note" style="background:var(--warn-bg);color:var(--warn-text);margin-bottom:8px;"><i class="ti ti-info-circle"></i> 工程未確定の製品を登録。ガントチャートにゴーストバーで仮表示されます。</div>
+    <label>製品名 <span style="color:var(--red);">*</span></label>
+    <input id="sName" type="text" placeholder="例: 新型シュークリーム型">
+    <label>カテゴリ</label>
+    <select id="sCat"><option>本型</option><option>本型追加工</option><option>試作型</option><option>１列試作</option><option>工場用品</option></select>
+    <label>営業担当者</label>
+    <input id="sSales" type="text" placeholder="例: 田中 花子">
+    <label>予定時期</label>
+    <input id="sEstimate" type="text" placeholder="例: 2026年9月予定">
+    <label>予想加工日数（営業日）</label>
+    <input id="sDays" type="number" min="1" placeholder="例: 30">
+    <label>メモ</label>
+    <input id="sMemo" type="text" placeholder="例: 設計確認中">
+    <div class="modal-btns">
+      <button class="danger-btn" id="sDeleteBtn" onclick="deleteSoon()" style="display:none;margin-right:auto;"><i class="ti ti-trash"></i> 削除</button>
+      <button class="promote-btn" id="sPromoteBtn" onclick="promoteSoon()" style="display:none;"><i class="ti ti-arrow-up"></i> 工程登録へ昇格</button>
+      <button onclick="closeModal('soonModalBg')">キャンセル</button>
+      <button class="primary" onclick="saveSoon()"><i class="ti ti-check"></i> 保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROD SALES MODAL -->
+<div class="modal-bg" id="prodSalesBg">
+  <div class="modal" style="width:480px;">
+    <h3><i class="ti ti-users" style="color:var(--blue);"></i> 営業担当設定</h3>
+    <p style="font-size:11px;color:var(--text2);margin-bottom:8px;">製品ごとに営業担当者を設定します。</p>
+    <div class="psl" id="pslList"></div>
+    <div class="modal-btns"><button class="primary" onclick="saveProdSales()"><i class="ti ti-check"></i> 保存</button><button onclick="closeModal('prodSalesBg')">閉じる</button></div>
+  </div>
+</div>
+
+<!-- HOLIDAY MODAL -->
+<div class="modal-bg" id="holModalBg">
+  <div class="modal">
+    <h3><i class="ti ti-calendar-off" style="color:var(--brown);"></i> 休日設定</h3>
+    <div class="hol-list" id="holList"></div>
+    <div class="hol-add-row">
+      <input type="date" id="newHolDate">
+      <input type="text" id="newHolName" placeholder="名称（例: 創立記念日）" style="flex:2;">
+      <button class="primary" onclick="addHoliday()"><i class="ti ti-plus"></i> 追加</button>
+    </div>
+    <div class="modal-btns">
+      <button class="danger-btn" onclick="clearHolidays()" style="margin-right:auto;"><i class="ti ti-trash"></i> 全削除</button>
+      <button onclick="closeModal('holModalBg')">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ================================================================
+// DATA & STATE
+// ================================================================
+const TODAY=new Date();TODAY.setHours(0,0,0,0);
+const DAY_NAMES=['日','月','火','水','木','金','土'];
+const PROC_COLORS={切削:'#185fa5',穴あけ:'#0f6e56',研磨:'#854f0b',洗浄:'#993556'};
+const GHOST_COLORS=['#854f0b','#534ab7','#0f6e56','#185fa5','#993556','#993c1d'];
+const CAT_STYLES={本型:['#185fa5','#e6f1fb'],本型追加工:['#0f6e56','#e1f5ee'],試作型:['#534ab7','#eeedfe'],'１列試作':['#854f0b','#faeeda'],工場用品:['#5f5e5a','#f1efe8']};
+const MCH_STYLES={V56:{bg:'#dbeafe',text:'#1e40af',bar:'#3b82f6'},ROBO:{bg:'#dcfce7',text:'#166534',bar:'#22c55e'}};
+const SK='gantt_v13';const ROW_H=34;
+
+let tasks=[],soonItems=[],productOrder=[],productSales={},productMeta={};
+let collapsed={},soonCollapsed=false,holdingOpen=true,holidays={};
+let editingTaskId=null,editingSoonId=null;
+let viewMode='week',SD,ED,DAY_W=24;
+let _drag=false,_wasDrag=false,dashPeriod='year';
+let filterVis={切削:true,穴あけ:true,研磨:true,洗浄:true,納期:true,商品化待ち:true};
+// Step2 temp state
+let newProdData=null,newTasks=[];
+let copySelected=[];
+
+// ── Load/Save ──
+function loadData(){
+  try{
+    const r=localStorage.getItem(SK);
+    if(r){const d=JSON.parse(r);tasks=d.tasks||[];soonItems=d.soonItems||[];productOrder=d.productOrder||[];productSales=d.productSales||{};productMeta=d.productMeta||{};collapsed=d.collapsed||{};soonCollapsed=d.soonCollapsed||false;holdingOpen=d.holdingOpen!==undefined?d.holdingOpen:true;holidays=d.holidays||{};viewMode=d.viewMode||'week';if(d.sd)SD=new Date(d.sd);if(d.ed)ED=new Date(d.ed);}
+    else loadDefaults();
+  }catch(e){loadDefaults();}
+}
+function loadDefaults(){
+  tasks=[
+    {id:1,product:'海老フライ型（大）',task:'切削',machine:'V56',person:'山田',start:'2026-06-02',end:'2026-06-27',deadline:'2026-08-20',progress:80,cat:'本型'},
+    {id:2,product:'海老フライ型（大）',task:'穴あけ',machine:'',person:'佐藤',start:'2026-06-30',end:'2026-07-10',deadline:'2026-08-20',progress:0,cat:'本型'},
+    {id:3,product:'海老フライ型（大）',task:'研磨',machine:'',person:'佐藤',start:'2026-07-13',end:'2026-07-18',deadline:'2026-08-20',progress:0,cat:'本型'},
+    {id:4,product:'海老フライ型（大）',task:'洗浄',machine:'',person:'鈴木',start:'2026-07-21',end:'2026-07-22',deadline:'2026-08-20',progress:0,cat:'本型'},
+    {id:5,product:'海老フライ型（小）',task:'切削',machine:'ROBO',person:'山田',start:'2026-07-01',end:'2026-07-31',deadline:'2026-09-10',progress:0,cat:'本型'},
+    {id:6,product:'海老フライ型（小）',task:'穴あけ',machine:'',person:'田中',start:'2026-08-03',end:'2026-08-14',deadline:'2026-09-10',progress:0,cat:'本型'},
+    {id:7,product:'海老フライ型（小）',task:'研磨',machine:'',person:'田中',start:'2026-08-17',end:'2026-08-21',deadline:'2026-09-10',progress:0,cat:'本型'},
+    {id:8,product:'海老フライ型（小）',task:'洗浄',machine:'',person:'鈴木',start:'2026-08-24',end:'2026-08-25',deadline:'2026-09-10',progress:0,cat:'本型'},
+    {id:9,product:'100Φカップ飯用蓋',task:'切削',machine:'V56',person:'田中',start:'2026-06-02',end:'2026-06-06',deadline:'2026-06-20',progress:100,cat:'本型追加工'},
+    {id:10,product:'100Φカップ飯用蓋',task:'穴あけ',machine:'',person:'田中',start:'2026-06-09',end:'2026-06-12',deadline:'2026-06-20',progress:100,cat:'本型追加工'},
+    {id:11,product:'100Φカップ飯用蓋',task:'洗浄',machine:'',person:'田中',start:'2026-06-13',end:'2026-06-13',deadline:'2026-06-20',progress:100,cat:'本型追加工'},
+    {id:12,product:'ミニタルト型（4連）',task:'切削',machine:'V56',person:'高橋',start:'2026-06-09',end:'2026-06-20',deadline:'2026-07-31',progress:100,cat:'試作型'},
+    {id:13,product:'ミニタルト型（4連）',task:'穴あけ',machine:'',person:'高橋',start:'2026-06-23',end:'2026-07-04',deadline:'2026-07-31',progress:40,cat:'試作型'},
+    {id:14,product:'ミニタルト型（4連）',task:'研磨',machine:'',person:'伊藤',start:'2026-07-07',end:'2026-07-11',deadline:'2026-07-31',progress:0,cat:'試作型'},
+    {id:15,product:'ミニタルト型（4連）',task:'洗浄',machine:'',person:'鈴木',start:'2026-07-14',end:'2026-07-14',deadline:'2026-07-31',progress:0,cat:'試作型'},
+    {id:16,product:'バウムクーヘン板',task:'切削',machine:'ROBO',person:'山田',start:'2026-07-06',end:'2026-07-10',deadline:'2026-07-25',progress:0,cat:'工場用品'},
+    {id:17,product:'バウムクーヘン板',task:'研磨',machine:'',person:'高橋',start:'2026-07-13',end:'2026-07-14',deadline:'2026-07-25',progress:0,cat:'工場用品'},
+    {id:18,product:'ノックアウトベース板（仮）',task:'切削',machine:'V56',person:'田中',start:'2026-06-16',end:'2026-06-19',deadline:'2026-07-10',progress:100,cat:'工場用品'},
+    {id:19,product:'ノックアウトベース板（仮）',task:'穴あけ',machine:'',person:'田中',start:'2026-06-22',end:'2026-06-26',deadline:'2026-07-10',progress:60,cat:'工場用品'},
+    {id:20,product:'ノックアウトベース板（仮）',task:'洗浄',machine:'',person:'鈴木',start:'2026-06-29',end:'2026-06-30',deadline:'2026-07-10',progress:0,cat:'工場用品'},
+    {id:21,product:'ヒトクチプリン容器',task:'切削',machine:'ROBO',person:'伊藤',start:'2026-06-15',end:'2026-06-30',deadline:'2026-07-18',progress:50,cat:'本型追加工'},
+    {id:22,product:'ヒトクチプリン容器',task:'穴あけ',machine:'',person:'佐藤',start:'2026-07-01',end:'2026-07-08',deadline:'2026-07-18',progress:0,cat:'本型追加工'},
+    {id:23,product:'ヒトクチプリン容器',task:'研磨',machine:'',person:'佐藤',start:'2026-07-09',end:'2026-07-11',deadline:'2026-07-18',progress:0,cat:'本型追加工'},
+    {id:24,product:'ヒトクチプリン容器',task:'洗浄',machine:'',person:'鈴木',start:'2026-07-14',end:'2026-07-14',deadline:'2026-07-18',progress:0,cat:'本型追加工'},
+    {id:25,product:'ガイドプレート追加工',task:'切削',machine:'V56',person:'山田',start:'2026-07-21',end:'2026-08-07',deadline:'2026-08-31',progress:0,cat:'本型追加工'},
+    {id:26,product:'ガイドプレート追加工',task:'穴あけ',machine:'',person:'田中',start:'2026-08-10',end:'2026-08-21',deadline:'2026-08-31',progress:0,cat:'本型追加工'},
+    {id:27,product:'ガイドプレート追加工',task:'洗浄',machine:'',person:'鈴木',start:'2026-08-24',end:'2026-08-25',deadline:'2026-08-31',progress:0,cat:'本型追加工'},
+    {id:28,product:'角型ゼリー容器型',task:'切削',machine:'ROBO',person:'高橋',start:'2026-08-03',end:'2026-09-11',deadline:'2026-10-30',progress:0,cat:'本型'},
+    {id:29,product:'角型ゼリー容器型',task:'穴あけ',machine:'',person:'伊藤',start:'2026-09-14',end:'2026-09-30',deadline:'2026-10-30',progress:0,cat:'本型'},
+    {id:30,product:'角型ゼリー容器型',task:'研磨',machine:'',person:'伊藤',start:'2026-10-01',end:'2026-10-09',deadline:'2026-10-30',progress:0,cat:'本型'},
+    {id:31,product:'角型ゼリー容器型',task:'洗浄',machine:'',person:'鈴木',start:'2026-10-13',end:'2026-10-14',deadline:'2026-10-30',progress:0,cat:'本型'},
+    {id:32,product:'クッキー抜き型（1列）',task:'切削',machine:'V56',person:'山田',start:'2026-06-22',end:'2026-06-26',deadline:'2026-07-15',progress:100,cat:'１列試作'},
+    {id:33,product:'クッキー抜き型（1列）',task:'穴あけ',machine:'',person:'佐藤',start:'2026-06-29',end:'2026-07-03',deadline:'2026-07-15',progress:20,cat:'１列試作'},
+    {id:34,product:'クッキー抜き型（1列）',task:'洗浄',machine:'',person:'鈴木',start:'2026-07-06',end:'2026-07-07',deadline:'2026-07-15',progress:0,cat:'１列試作'},
+  ];
+  soonItems=[
+    {id:'s1',product:'新型シュークリーム型',cat:'本型',sales:'山本 次郎',estimate:'2026年9月予定',days:40,memo:'設計図レビュー中'},
+    {id:'s2',product:'マカロン抜き型（6連）',cat:'試作型',sales:'田中 花子',estimate:'2026年10月予定',days:25,memo:'顧客サンプル確認待ち'},
+    {id:'s3',product:'ロールケーキ板',cat:'工場用品',sales:'鈴木 一郎',estimate:'未定',days:15,memo:'素材選定中'},
+    {id:'s4',product:'エクレア型（大）',cat:'本型',sales:'佐々木 誠',estimate:'2026年11月予定',days:55,memo:''},
+  ];
+  productOrder=[...new Set(tasks.map(t=>t.product))];
+  productSales={'海老フライ型（大）':'田中 花子','海老フライ型（小）':'田中 花子','100Φカップ飯用蓋':'鈴木 一郎','ミニタルト型（4連）':'山本 次郎','バウムクーヘン板':'佐々木 誠','ノックアウトベース板（仮）':'鈴木 一郎','ヒトクチプリン容器':'田中 花子','ガイドプレート追加工':'山本 次郎','角型ゼリー容器型':'佐々木 誠','クッキー抜き型（1列）':'田中 花子'};
+  productMeta={'海老フライ型（大）':{deadline:'2026-08-20',cat:'本型',memo:'',events:[{label:'キャビ出荷日',date:'2026-08-01',color:'#f97316'},{label:'客先確認',date:'2026-07-15',color:'#185fa5'}]},'海老フライ型（小）':{deadline:'2026-09-10',cat:'本型',memo:''},'100Φカップ飯用蓋':{deadline:'2026-06-20',cat:'本型追加工',memo:'完了'},'ミニタルト型（4連）':{deadline:'2026-07-31',cat:'試作型',memo:''},'バウムクーヘン板':{deadline:'2026-07-25',cat:'工場用品',memo:''},'ノックアウトベース板（仮）':{deadline:'2026-07-10',cat:'工場用品',memo:''},'ヒトクチプリン容器':{deadline:'2026-07-18',cat:'本型追加工',memo:'今月末納期注意'},'ガイドプレート追加工':{deadline:'2026-08-31',cat:'本型追加工',memo:''},'角型ゼリー容器型':{deadline:'2026-10-30',cat:'本型',memo:''},'クッキー抜き型（1列）':{deadline:'2026-07-15',cat:'１列試作',memo:''}};
+  holidays={'2026-07-20':'海の日','2026-08-11':'山の日','2026-08-10':'山の日振替','2026-09-21':'敬老の日','2026-09-23':'秋分の日','2026-10-12':'体育の日','2026-11-03':'文化の日','2026-11-23':'勤労感謝の日'};
+}
+function sv(){const n=new Date();const el=document.getElementById('lastSavedLabel');if(el)el.textContent=n.getFullYear()+'年'+(n.getMonth()+1)+'月'+n.getDate()+'日 '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+' 更新';}
+function saveData(){try{localStorage.setItem(SK,JSON.stringify({tasks,soonItems,productOrder,productSales,productMeta,collapsed,soonCollapsed,holdingOpen,holidays,viewMode,sd:fi(SD),ed:fi(ED)}));;sv();}catch(e){}}
+const fi=d=>{
+  if(!d)return '';
+  // Use local date to avoid UTC timezone offset
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const dd=String(d.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+dd;
+};
+const fd=ds=>{const d=new Date(ds);return `${d.getMonth()+1}/${d.getDate()}(${DAY_NAMES[d.getDay()]})`;};
+const isHol=ds=>!!holidays[ds];
+const isOff=ds=>{
+  const pp=String(ds).split('-');
+  const d=pp.length>=3?new Date(+pp[0],+pp[1]-1,+pp[2]):new Date(ds);
+  const w=d.getDay();return w===0||isHol(ds); // 土曜は稼働日
+};
+const gc=t=>PROC_COLORS[t]||'#534ab7';
+const ghostC=i=>GHOST_COLORS[i%GHOST_COLORS.length];
+function workdays(s,e){
+  if(!s||!e)return 0;
+  const ps=String(s).split('-'),pe=String(e).split('-');
+  if(ps.length<3||pe.length<3)return 0;
+  let c=0,d=new Date(+ps[0],+ps[1]-1,+ps[2]);
+  const en=new Date(+pe[0],+pe[1]-1,+pe[2]);
+  while(d<=en){if(!isOff(fi(d)))c++;d.setDate(d.getDate()+1);}
+  return c;
+}
+function addWD(ds,wd){let c=0;const _pp=String(ds).split('-');const d=_pp.length>=3?new Date(+_pp[0],+_pp[1]-1,+_pp[2]):new Date(ds);while(c<wd){d.setDate(d.getDate()+1);if(!isOff(fi(d)))c++;}return fi(d);}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+function exportJSON(){const b=new Blob([JSON.stringify({tasks,soonItems,productOrder,productSales,productMeta,collapsed,holdingOpen,holidays},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const n=new Date();a.download=`gantt_${n.getFullYear()}${String(n.getMonth()+1).padStart(2,'0')}${String(n.getDate()).padStart(2,'0')}.json`;a.click();showToast('エクスポートしました');}
+function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);tasks=d.tasks||[];soonItems=d.soonItems||[];productOrder=d.productOrder||[...new Set(tasks.map(t=>t.product))];productSales=d.productSales||{};productMeta=d.productMeta||{};collapsed=d.collapsed||{};holdingOpen=d.holdingOpen!==undefined?d.holdingOpen:true;holidays=d.holidays||{};saveData();buildAll();showToast('インポートしました');}catch(err){showToast('読み込みエラー');}};r.readAsText(f);e.target.value='';}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-bg.open').forEach(m=>m.classList.remove('open'));});
+// ── TAB ──
+function switchTab(t){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+t).classList.add('active');document.getElementById('screen-'+t).classList.add('active');if(t==='dash'){updateDashFilters();buildDashboard();}}
+// ── VIEW MODE ──
+function setVM(m){viewMode=m;['day','week','month','quarter'].forEach(v=>{const el=document.getElementById('vs-'+v);if(el)el.classList.remove('active-seg');});const el=document.getElementById('vs-'+m);if(el)el.classList.add('active-seg');applyVM();syncRangeInputs();saveData();buildAll();}
+function applyVM(){const ref=SD||new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate()-7);if(viewMode==='day'){SD=new Date(ref);ED=new Date(SD);ED.setDate(ED.getDate()+13);}else if(viewMode==='week'){SD=new Date(ref.getFullYear(),ref.getMonth(),1);ED=new Date(ref.getFullYear(),ref.getMonth()+1,0);}else if(viewMode==='month'){SD=new Date(ref.getFullYear(),ref.getMonth(),1);ED=new Date(ref.getFullYear(),ref.getMonth()+3,0);}else{const q=Math.floor(ref.getMonth()/3);SD=new Date(ref.getFullYear(),q*3,1);ED=new Date(ref.getFullYear(),q*3+6,0);}}
+function navShift(dir){if(!SD)applyVM();if(viewMode==='day'){SD.setDate(SD.getDate()+dir*14);ED.setDate(ED.getDate()+dir*14);}else if(viewMode==='week'){SD.setMonth(SD.getMonth()+dir);ED=new Date(SD.getFullYear(),SD.getMonth()+1,0);}else if(viewMode==='month'){SD.setMonth(SD.getMonth()+dir*3);ED=new Date(SD.getFullYear(),SD.getMonth()+3,0);}else{SD.setMonth(SD.getMonth()+dir*6);ED=new Date(SD.getFullYear(),SD.getMonth()+6,0);}syncRangeInputs();saveData();buildAll();}
+function navToday(){const m=TODAY.getMonth(),y=TODAY.getFullYear();if(viewMode==='day'){SD=new Date(y,m,TODAY.getDate()-7);ED=new Date(y,m,TODAY.getDate()+7);}else if(viewMode==='week'){SD=new Date(y,m,1);ED=new Date(y,m+1,0);}else if(viewMode==='month'){SD=new Date(y,m,1);ED=new Date(y,m+3,0);}else{const q=Math.floor(m/3);SD=new Date(y,q*3,1);ED=new Date(y,q*3+6,0);}syncRangeInputs();saveData();buildAll();}
+function initDates(){if(!SD||!ED){SD=new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate()-7);ED=new Date(TODAY.getFullYear(),TODAY.getMonth()+1,0);}}
+// ── CALC ──
+// Full date range covers all task dates + padding (enables full history scroll)
+function getFullRange(){
+  if(!SD||!ED||isNaN(SD.getTime()))initDates();
+  const dates=[new Date(TODAY)];
+  if(SD&&!isNaN(SD.getTime()))dates.push(new Date(SD));
+  if(ED&&!isNaN(ED.getTime()))dates.push(new Date(ED));
+  tasks.forEach(function(t){
+    const _p=function(s){if(!s||s.length<8)return null;const pp=s.split('-');return pp.length>=3?new Date(+pp[0],+pp[1]-1,+pp[2]):null;};
+    const ts=_p(t.start);
+    const te=_p(t.end);
+    const td=_p(t.deadline);
+    if(ts&&!isNaN(ts.getTime()))dates.push(ts);
+    if(te&&!isNaN(te.getTime()))dates.push(te);
+    if(td&&!isNaN(td.getTime()))dates.push(td);
+  });
+  const ms=Math.min.apply(null,dates.map(function(d){return d.getTime();}));
+  const mx=Math.max.apply(null,dates.map(function(d){return d.getTime();}));
+  const fSD=new Date(ms); fSD.setDate(fSD.getDate()-14);
+  const fED=new Date(mx); fED.setDate(fED.getDate()+30);
+  return {fSD:fSD,fED:fED};
+}
+function chartTotalDays(){const r=getFullRange();return Math.max(1,Math.round((r.fED-r.fSD)/86400000)+1);}
+function totalDays(){if(!SD||!ED)initDates();return Math.max(1,Math.round((ED-SD)/86400000)+1);}
+function dateToX(ds){
+  const r=getFullRange();
+  // Parse date string as local time to avoid UTC offset issues
+  const parts=String(ds).split('-');
+  const d=parts.length>=3?new Date(+parts[0],+parts[1]-1,+parts[2]):new Date(ds);
+  return Math.round((d-r.fSD)/86400000)*DAY_W;
+}
+function xToDate(x){const r=getFullRange();const d=new Date(r.fSD);d.setDate(d.getDate()+Math.round(x/DAY_W));return fi(d);}
+function calcDayW(){if(!SD||!ED||isNaN(SD.getTime())||isNaN(ED.getTime()))initDates();const cc=document.getElementById('chartCol');const avail=(cc?cc.clientWidth:window.innerWidth-210)-4;const td=Math.max(1,totalDays());if(viewMode==='day')DAY_W=Math.max(20,Math.floor(avail/td));else if(viewMode==='week')DAY_W=Math.max(14,Math.floor(avail/td));else if(viewMode==='month')DAY_W=Math.max(8,Math.floor(avail/td));else DAY_W=Math.max(5,Math.floor(avail/td));}
+// ── HEADER ──
+function buildHeader(){
+  const {fSD,fED}=getFullRange();const hd=document.getElementById('chartHd');hd.innerHTML='';const cw=chartTotalDays()*DAY_W;hd.style.width=cw+'px';
+  const mR=document.createElement('div');mR.className='hrow mh-row';const wR=document.createElement('div');wR.className='hrow wh-row';const dR=document.createElement('div');dR.className='hrow dh-row';
+  const months={};let wStart=null,wDays=0;let cur=new Date(fSD);
+  while(cur<=fED){
+    const ds=fi(cur),dow=cur.getDay();
+    const mk=cur.getFullYear()+'-'+cur.getMonth();if(!months[mk])months[mk]={label:`${cur.getFullYear()}年${cur.getMonth()+1}月`,days:0};months[mk].days++;
+    if(dow===1||cur.getTime()===SD.getTime()){if(wStart!==null){const wc=document.createElement('div');wc.className='hcell wh';wc.style.width=(wDays*DAY_W)+'px';wc.textContent=DAY_W>=14?`${wStart.getMonth()+1}/${wStart.getDate()}週`:'';wR.appendChild(wc);}wStart=new Date(cur);wDays=0;}wDays++;
+    const dc=document.createElement('div');const tdS=fi(TODAY);let cls='hcell dh';if(ds===tdS)cls+=' tday';else if(isHol(ds))cls+=' hol';else if(dow===0)cls+=' sun';else if(dow===6)cls+=' sat';dc.className=cls;dc.style.width=DAY_W+'px';
+    if(DAY_W>=20)dc.innerHTML=`${cur.getDate()}<br><span style="font-size:7px">${DAY_NAMES[dow]}</span>`;else if(DAY_W>=12)dc.textContent=cur.getDate();else if(DAY_W>=7&&(cur.getDate()===1||cur.getDate()%5===0))dc.textContent=cur.getDate();if(holidays[ds])dc.title=holidays[ds];dR.appendChild(dc);cur.setDate(cur.getDate()+1);
+  }
+  if(wDays>0){const wc=document.createElement('div');wc.className='hcell wh';wc.style.width=(wDays*DAY_W)+'px';wc.textContent=wStart&&DAY_W>=14?`${wStart.getMonth()+1}/${wStart.getDate()}週`:'';wR.appendChild(wc);}
+  Object.values(months).forEach(m=>{const mc=document.createElement('div');mc.className='hcell mh';mc.style.width=(m.days*DAY_W)+'px';mc.textContent=m.label;mR.appendChild(mc);});
+  hd.appendChild(mR);hd.appendChild(wR);hd.appendChild(dR);
+}
+// ── COL BACKGROUNDS ──
+function addColBg(chart){const {fSD:_fSD,fED:_fED}=getFullRange();let c=new Date(_fSD);while(c<=_fED){const ds=fi(c),dow=c.getDay();let bg='';if(isHol(ds))bg='rgba(255,120,180,.07)';else if(dow===0)bg='rgba(220,0,0,.045)';else if(dow===6)bg='rgba(0,0,200,.035)';if(bg){const el=document.createElement('div');el.className='col-bg';el.style.cssText=`left:${dateToX(ds)}px;width:${DAY_W}px;background:${bg};`;chart.appendChild(el);}c.setDate(c.getDate()+1);}}
+function addTodayLine(chart){if(!SD||isNaN(SD.getTime()))return;const {fSD:_tSD}=getFullRange();const tx=Math.round((TODAY-_tSD)/86400000)*DAY_W;const tl=document.createElement('div');tl.className='today-line';tl.style.left=tx+'px';const tll=document.createElement('div');tll.className='today-lbl';tll.textContent='今日';tl.appendChild(tll);chart.appendChild(tl);}
+function addDeadlineLine(chart,dl,cw,product){
+  if(!dl||dl.length<8||filterVis['納期']===false)return;
+  const _dltest=new Date(dl);if(isNaN(_dltest.getTime()))return;
+  const dx=dateToX(dl)+DAY_W;if(dx<-50||dx>cw+50)return;// placed after the date
+  // Wrapper for drag (14px wide, centered on line)
+  const wrap=document.createElement('div');
+  wrap.style.cssText='position:absolute;top:0;bottom:0;left:'+(dx-6)+'px;width:14px;z-index:8;cursor:ew-resize;';
+  const dln=document.createElement('div');
+  dln.style.cssText='position:absolute;top:0;bottom:0;left:6px;width:2px;background:#e24b4a;pointer-events:none;';
+  wrap.appendChild(dln);
+  if(dx>=0&&dx<=cw){
+    const dfl=document.createElement('div');
+    dfl.style.cssText='position:absolute;top:1px;left:8px;font-size:8px;font-weight:600;padding:1px 2px;border-radius:2px;background:#e24b4a;color:#fff;pointer-events:none;white-space:nowrap;';
+    dfl.textContent='納期';wrap.appendChild(dfl);
+  }
+  if(product){makeDeadlineDraggable(wrap,product,dx);}
+  chart.appendChild(wrap);
+}
+function makeDeadlineDraggable(wrap,product,startX){
+  let dragging=false,ox=0,sx=0;
+  const pop=document.getElementById('ddpop');
+  wrap.addEventListener('mousedown',function(e){
+    if(e.button!==0)return;
+    dragging=true;ox=parseInt(wrap.style.left)||startX-6;sx=e.clientX;
+    _drag=true;_wasDrag=false;
+    document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+    e.preventDefault();e.stopPropagation();
+  });
+  function onMove(e){
+    if(!dragging)return;const dx2=e.clientX-sx;
+    if(Math.abs(dx2)>2)_wasDrag=true;
+    wrap.style.left=Math.max(-6,ox+dx2)+'px';
+    const newDate=xToDate(Math.round((ox+dx2+6)/DAY_W)*DAY_W);
+    pop.textContent='納期: '+fd(newDate);
+    pop.style.display='block';pop.style.left=(e.clientX+12)+'px';pop.style.top=(e.clientY-28)+'px';
+  }
+  function onUp(){
+    document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);
+    pop.style.display='none';_drag=false;
+    if(!_wasDrag){_wasDrag=false;return;}
+    const newX=parseInt(wrap.style.left)+6;
+    const snapped=Math.round(newX/DAY_W)*DAY_W;
+    const newDate=xToDate(snapped);
+    // Update all tasks for this product and productMeta
+    tasks.filter(t=>t.product===product).forEach(t=>{t.deadline=newDate;});
+    if(!productMeta[product])productMeta[product]={};
+    productMeta[product].deadline=newDate;
+    saveData();setTimeout(()=>{_wasDrag=false;},150);setTimeout(()=>render(),60);
+  }
+}
+// ── RENDER ──
+function updateSalesFilter(){const sel=document.getElementById('filterSales');const cur=sel.value;sel.innerHTML='<option value="">営業担当: 全員</option>';[...new Set(Object.values(productSales).filter(Boolean))].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;if(s===cur)o.selected=true;sel.appendChild(o);});}
+function render(){
+  calcDayW();const fCat=document.getElementById('filterCat').value;const fSales=document.getElementById('filterSales').value;const cw=chartTotalDays()*DAY_W;
+  const lrEl=document.getElementById('labelRows');const crEl=document.getElementById('chartRows');lrEl.innerHTML='';crEl.innerHTML='';
+  let ft=tasks.filter(t=>{if(fCat&&t.cat!==fCat)return false;if(fSales&&productSales[t.product]!==fSales)return false;return true;});
+  const groups={};ft.forEach(t=>{if(!groups[t.product])groups[t.product]=[];groups[t.product].push(t);});
+  let prods=productOrder.filter(p=>groups[p]);
+  if(fSales)prods=prods.sort((a,b)=>(productSales[a]||'').localeCompare(productSales[b]||'','ja'));
+  prods.forEach(product=>{
+    const ptasks=groups[product];const isCol=collapsed[product];
+    const allS=ptasks.map(t=>new Date(t.start)).reduce((a,b)=>a<b?a:b);
+    const allE=ptasks.map(t=>new Date(t.end)).reduce((a,b)=>a>b?a:b);
+    const meta=productMeta[product]||{};const deadline=meta.deadline||ptasks.map(t=>t.deadline).filter(Boolean).sort().pop()||'';
+    const pcat=ptasks[0].cat;const psales=productSales[product]||'';
+    const [catBg,catFg]=CAT_STYLES[pcat]||['#888','#fff'];
+    const totalD=ptasks.reduce((s,t)=>s+Math.max(1,Math.round((new Date(t.end)-new Date(t.start))/86400000)),0);
+    const doneD=ptasks.reduce((s,t)=>s+Math.max(1,Math.round((new Date(t.end)-new Date(t.start))/86400000))*(t.progress/100),0);
+    const overProg=totalD>0?Math.round(doneD/totalD*100):0;
+    const calD=Math.round((allE-allS)/86400000)+1;const wds=workdays(fi(allS),fi(allE));
+    // PARENT LABEL
+    const pLbl=document.createElement('div');pLbl.className='label-row plrow';pLbl.style.height=ROW_H+'px';pLbl.dataset.product=product;pLbl.draggable=true;
+    pLbl.addEventListener('dragstart',e=>{window._dp=product;e.dataTransfer.effectAllowed='move';});
+    pLbl.addEventListener('contextmenu',e=>{e.preventDefault();showCtxMenu(e,product);});
+    pLbl.addEventListener('dragover',e=>{e.preventDefault();pLbl.style.outline='2px solid #85b7eb';});
+    pLbl.addEventListener('drop',e=>{e.preventDefault();pLbl.style.outline='';const src=window._dp,tgt=product;if(!src||src===tgt)return;const si=productOrder.indexOf(src),ti=productOrder.indexOf(tgt);if(si<0||ti<0)return;productOrder.splice(si,1);productOrder.splice(ti,0,src);saveData();render();});
+    pLbl.addEventListener('dragleave',()=>pLbl.style.outline='');
+    pLbl.addEventListener('click',()=>openProductEditModal(product));
+    const tog=document.createElement('span');tog.style.cssText='width:13px;height:13px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--border);border-radius:3px;font-size:9px;flex-shrink:0;background:var(--bg);margin-right:2px;';tog.textContent=isCol?'›':'⌄';tog.onclick=e=>{e.stopPropagation();collapsed[product]=!collapsed[product];saveData();render();};
+    const cb=document.createElement('span');cb.style.cssText=`font-size:9px;padding:1px 4px;border-radius:7px;font-weight:600;background:${catBg};color:${catFg};flex-shrink:0;`;cb.textContent=pcat;
+    const lt=document.createElement('div');lt.style.cssText='overflow:hidden;flex:1;';lt.innerHTML=`<div style="font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${product}</div>${psales?`<div style="font-size:9px;color:var(--text3);">${psales}</div>`:''}`;
+    pLbl.appendChild(tog);pLbl.appendChild(cb);pLbl.appendChild(lt);
+    // add task button
+    const addT=document.createElement('button');addT.innerHTML='<i class="ti ti-plus" style="font-size:10px;"></i>';addT.style.cssText='padding:1px 5px;font-size:9px;flex-shrink:0;';addT.title='工程を追加';addT.onclick=e=>{e.stopPropagation();openAddTaskToProduct(product);};pLbl.appendChild(addT);
+    lrEl.appendChild(pLbl);
+    // PARENT CHART
+    const pCr=document.createElement('div');pCr.className='chart-row pcrow';pCr.style.cssText=`height:${ROW_H}px;width:${cw}px;position:relative;`;addColBg(pCr);addTodayLine(pCr);addDeadlineLine(pCr,deadline,cw,product);
+    // Custom events
+    ((productMeta[product]&&productMeta[product].events)||[]).forEach((ev,ei)=>addEventLine(pCr,ev,cw,false,product,ei));
+    const pbx=Math.max(0,dateToX(fi(allS)));const pbw=Math.min(Math.max(DAY_W,dateToX(fi(allE))-pbx+DAY_W),cw-pbx);
+    if(pbw>0){const pb=document.createElement('div');pb.className='gbar pbar';pb.style.cssText=`left:${pbx}px;width:${pbw}px;`;const txt=pbw>80?`全体${overProg}% | ${calD}日(実${wds}日)`:pbw>40?`${overProg}%`:'';pb.innerHTML=`<div class="pf" style="width:${overProg}%;background:#aaa;opacity:1;"></div><span class="blt" style="font-size:8px;color:#3a3a38;font-weight:700;">${txt}</span>`;pCr.appendChild(pb);}
+    crEl.appendChild(pCr);
+    if(!isCol){
+      ptasks.forEach(t=>{
+        if(filterVis[t.task]===false)return; // レーンごと非表示
+        const cLbl=document.createElement('div');cLbl.className='label-row';cLbl.style.height=ROW_H+'px';
+        cLbl.draggable=true;
+        cLbl.dataset.taskId=t.id;
+        cLbl.addEventListener('dragstart',e=>{window._dtask={id:t.id,product};e.dataTransfer.effectAllowed='move';cLbl.style.opacity='.5';});
+        cLbl.addEventListener('dragend',()=>{cLbl.style.opacity='';});
+        cLbl.addEventListener('dragover',e=>{e.preventDefault();cLbl.style.outline='2px solid #85b7eb';});
+        cLbl.addEventListener('dragleave',()=>cLbl.style.outline='');
+        cLbl.addEventListener('drop',e=>{
+          e.preventDefault();cLbl.style.outline='';
+          const src=window._dtask;
+          if(!src||src.id===t.id||src.product!==product)return;
+          const si=tasks.findIndex(x=>x.id===src.id);
+          const ti=tasks.findIndex(x=>x.id===t.id);
+          if(si<0||ti<0)return;
+          const [moved]=tasks.splice(si,1);tasks.splice(ti,0,moved);
+          saveData();render();
+        });
+        cLbl.addEventListener('contextmenu',e=>{e.preventDefault();showTaskCtxMenu(e,t.id);});
+        const clr=document.createElement('div');clr.style.cssText=`width:3px;height:55%;border-radius:2px;background:${gc(t.task)};flex-shrink:0;margin-left:6px;`;
+        const tn=document.createElement('div');tn.style.cssText='font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;';tn.textContent=t.task+(t.machine?` (${t.machine})`:'');
+        cLbl.appendChild(clr);cLbl.appendChild(tn);lrEl.appendChild(cLbl);
+        const cCr=document.createElement('div');cCr.className='chart-row';cCr.style.cssText=`height:${ROW_H}px;width:${cw}px;position:relative;`;addColBg(cCr);addTodayLine(cCr);
+        ((productMeta[product]&&productMeta[product].events)||[]).forEach(ev=>addEventLine(cCr,ev,cw,true,null,null));
+        if(deadline){const dx2=dateToX(deadline);if(dx2>0&&dx2<cw){const dl2=document.createElement('div');dl2.style.cssText='position:absolute;top:0;bottom:0;left:'+dx2+'px;width:1px;background:rgba(226,75,74,.18);z-index:5;pointer-events:none;';cCr.appendChild(dl2);}}
+        const color=gc(t.task);const bx0=dateToX(t.start);const bw0=Math.max(DAY_W,dateToX(t.end)-bx0+DAY_W);const bxC=Math.max(0,bx0);const bwC=Math.min(bw0-(bxC-bx0),cw-bxC);
+        if(bwC>0&&filterVis[t.task]!==false){const wdT=workdays(t.start,t.end);let mbadge='';if(t.machine&&t.task==='切削'){const ms=MCH_STYLES[t.machine];if(ms)mbadge=`<span style="background:${ms.bg};color:${ms.text};font-size:8px;padding:0 3px;border-radius:3px;font-weight:700;margin-right:2px;flex-shrink:0;">${t.machine}</span>`;}const lbl=bwC>60?`${t.task} ${t.progress}%`:bwC>30?`${t.progress}%`:'';
+        const bar=document.createElement('div');bar.className='gbar tbar';bar.style.cssText=`left:${bxC}px;width:${bwC}px;background:${color};color:#fff;`;bar.innerHTML=`<div class="pf" style="width:${t.progress}%;"></div>${mbadge}<span class="blt">${lbl}</span><div class="rh"></div>`;
+        bar.addEventListener('mouseenter',e=>{if(!_drag)showTT(e,t);});bar.addEventListener('mousemove',e=>{if(!_drag)moveTT(e);});bar.addEventListener('mouseleave',hideTT);
+        bar.addEventListener('click',()=>{if(!_wasDrag)openEditTask(t.id);});makeDraggable(bar,t);cCr.appendChild(bar);}
+        crEl.appendChild(cCr);
+      });
+    }
+  });
+  // SOON ROW - 製品ごとに個別レーン（折りたたみ対応）
+  if(soonItems.length>0&&filterVis['商品化待ち']){
+    // Section header (clickable to collapse)
+    const sHdrLbl=document.createElement('div');
+    sHdrLbl.className='label-row slrow';
+    sHdrLbl.style.cssText='height:24px;background:#fff8f0;border-bottom:1px solid var(--warn-border);cursor:pointer;user-select:none;';
+    const sTogIcon=soonCollapsed?'›':'⌄';
+    sHdrLbl.innerHTML='<span style="width:13px;height:13px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:3px;font-size:9px;flex-shrink:0;background:var(--bg);margin-right:2px;">'+sTogIcon+'</span>'
+      +'<i class="ti ti-star" style="font-size:9px;color:var(--warn);flex-shrink:0;"></i>'
+      +'<div style="font-size:10px;font-weight:700;color:#854f0b;margin-left:3px;">商品化待ち</div>'
+      +'<div style="font-size:9px;color:var(--text3);margin-left:4px;">('+soonItems.length+'件)</div>';
+    sHdrLbl.addEventListener('click',()=>{soonCollapsed=!soonCollapsed;saveData();render();});
+    lrEl.appendChild(sHdrLbl);
+
+    const sHdrCr=document.createElement('div');
+    sHdrCr.style.cssText='height:24px;width:'+cw+'px;background:#fff8f0;border-bottom:1px solid var(--warn-border);position:relative;flex-shrink:0;';
+    addColBg(sHdrCr);addTodayLine(sHdrCr);
+    crEl.appendChild(sHdrCr);
+
+    if(!soonCollapsed){
+      soonItems.forEach((s,i)=>{
+        const [catBg,catFg]=CAT_STYLES[s.cat]||['#888','#fff'];
+        const psales=productSales[s.product]||s.sales||'';
+
+        // Compute bar position from days (予想加工日数)
+        if(!s.barStart||!s.barEnd){
+          let baseDate=new Date(TODAY);baseDate.setDate(baseDate.getDate()+3+i*2);
+          s.barStart=fi(baseDate);
+          const wdCount=s.days>0?s.days:21;
+          s.barEnd=addWD(s.barStart,wdCount);
+        } else if(s.days>0) {
+          // Recompute end based on days when dragged (keep start, recalc end)
+          // Only if days changed - keep user-dragged position
+        }
+
+        // LABEL
+        const sLbl=document.createElement('div');sLbl.className='label-row slrow';sLbl.style.height=ROW_H+'px';
+        const scb=document.createElement('span');scb.style.cssText='font-size:9px;padding:1px 4px;border-radius:7px;font-weight:600;background:'+catBg+';color:'+catFg+';flex-shrink:0;opacity:.75;';scb.textContent=s.cat;
+        const slt=document.createElement('div');slt.style.cssText='overflow:hidden;flex:1;';
+        slt.innerHTML='<div style="font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#a06030;">'+s.product+'</div>'+(psales?'<div style="font-size:9px;color:var(--text3);">'+psales+'</div>':'');
+        const seditBtn=document.createElement('button');seditBtn.innerHTML='<i class="ti ti-edit" style="font-size:9px;"></i>';seditBtn.style.cssText='padding:1px 4px;font-size:9px;flex-shrink:0;';seditBtn.title='編集';seditBtn.onclick=()=>openEditSoon(s.id);
+        sLbl.appendChild(scb);sLbl.appendChild(slt);sLbl.appendChild(seditBtn);
+        lrEl.appendChild(sLbl);
+
+        // CHART ROW
+        const sCr=document.createElement('div');sCr.className='chart-row scrow';sCr.style.cssText='height:'+ROW_H+'px;width:'+cw+'px;position:relative;';
+        addColBg(sCr);addTodayLine(sCr);
+
+        // Ghost color palette (pale/transparent)
+        const ghostPalette=['rgba(133,79,11,.22)','rgba(83,74,183,.22)','rgba(15,110,86,.22)','rgba(24,95,165,.22)','rgba(153,53,86,.22)'];
+        const ghostBorder=['#c8a87a','#9b95d4','#6ab5a0','#7aaded','#c88aa0'];
+        const gc2=ghostPalette[i%ghostPalette.length];
+        const gb2=ghostBorder[i%ghostBorder.length];
+
+        // BAR - width based on days
+        const wdCount=s.days>0?s.days:21;
+        const barEndCalc=addWD(s.barStart,wdCount);
+        // _manualEnd is set only when user drags the right edge
+        // otherwise always recalculate from days so editing days updates bar width
+        const barEndUse=s._manualEnd||barEndCalc;
+        s.barEnd=barEndUse; // keep barEnd in sync for tooltip
+
+        const bx0=dateToX(s.barStart);
+        const bw0=Math.max(DAY_W*2,dateToX(barEndUse)-bx0+DAY_W);
+        const bxC=Math.max(0,bx0);
+        const bwC=Math.min(bw0-(bxC-bx0),cw-bxC);
+
+        if(bwC>0){
+          const lbl=bwC>80?s.product+(s.days?' 約'+s.days+'日':''):bwC>30?'☆':'';
+          const gb=document.createElement('div');gb.className='gbar tbar';
+          gb.style.cssText='left:'+bxC+'px;width:'+bwC+'px;'
+            +'background:'+gc2+';color:'+gb2+';'
+            +'border:1.5px dashed '+gb2+';'
+            +'font-weight:600;';
+          gb.innerHTML='<i class="ti ti-star" style="font-size:8px;margin-right:2px;flex-shrink:0;"></i><span class="blt">'+lbl+'</span><div class="rh"></div>';
+          gb.addEventListener('mouseenter',e=>{if(!_drag)showSoonTip(e,s);});
+          gb.addEventListener('mousemove',e=>{if(!_drag)moveTT(e);});
+          gb.addEventListener('mouseleave',hideTT);
+          gb.addEventListener('click',()=>{if(!_wasDrag)openEditSoon(s.id);});
+          makeSoonDraggable(gb,s);
+          sCr.appendChild(gb);
+        }
+        crEl.appendChild(sCr);
+      });
+    }
+  }
+  const cc=document.getElementById('chartCol');const lb=document.querySelector('.label-col-body');if(cc&&lb)cc.onscroll=()=>{requestAnimationFrame(()=>{lb.scrollTop=cc.scrollTop;});};
+  document.getElementById('chartInner').style.width=cw+'px';renderHolding();
+}
+// ── DRAG BARS ──
+function makeDraggable(bar,t){
+  let dX=0,sL=0,sW=0,mode='move',loc=false;const rh=bar.querySelector('.rh');const pop=document.getElementById('ddpop');
+  function dn(e){mode=e.target.closest('.rh')?'resize':'move';dX=e.clientX;sL=parseInt(bar.style.left)||0;sW=parseInt(bar.style.width)||0;loc=false;_wasDrag=false;_drag=true;document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);e.preventDefault();e.stopPropagation();}
+  function mv(e){const dx=e.clientX-dX;if(Math.abs(dx)>3){loc=true;_wasDrag=true;}if(!loc)return;hideTT();if(mode==='move'){bar.style.left=Math.max(0,sL+dx)+'px';const ns=xToDate(Math.round(Math.max(0,sL+dx)/DAY_W)*DAY_W);const dur=Math.round((new Date(t.end)-new Date(t.start))/86400000);const ne=new Date(ns);ne.setDate(ne.getDate()+dur);const wdLive=workdays(ns,fi(ne));pop.textContent=`${fd(ns)} 〜 ${fd(fi(ne))} (実${wdLive}日)`;}else{bar.style.width=Math.max(DAY_W,sW+dx)+'px';const _newEnd=xToDate((parseInt(bar.style.left)||0)+Math.max(DAY_W,Math.round((sW+dx)/DAY_W)*DAY_W)-DAY_W);
+    const _newStart=xToDate(parseInt(bar.style.left)||0);
+    const _wdR=workdays(_newStart,_newEnd);
+    pop.textContent=`終了: ${fd(_newEnd)} (実${_wdR}日)`;}pop.style.display='block';pop.style.left=(e.clientX+12)+'px';pop.style.top=(e.clientY-28)+'px';}
+  function up(){document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);pop.style.display='none';_drag=false;if(!loc){_wasDrag=false;return;}if(mode==='move'){const nl=parseInt(bar.style.left)||0,sn=Math.round(nl/DAY_W)*DAY_W;bar.style.left=sn+'px';const dur=Math.round((new Date(t.end)-new Date(t.start))/86400000);const ns=xToDate(sn);const ne=new Date(ns);ne.setDate(ne.getDate()+dur);t.start=ns;t.end=fi(ne);}else{const nw=Math.max(DAY_W,Math.round((parseInt(bar.style.width)||DAY_W)/DAY_W)*DAY_W);bar.style.width=nw+'px';t.end=xToDate((parseInt(bar.style.left)||0)+nw-DAY_W);}saveData();setTimeout(()=>{_wasDrag=false;},150);setTimeout(()=>buildAll(),60);}
+  bar.addEventListener('mousedown',dn);
+}
+// ── DRAG SCROLL ──
+function initDragScroll(colEl){let isDown=false,startX=0,scrollLeft=0;function onDown(e){if(e.button!==0)return;if(e.target.closest('.gbar,.rh'))return;isDown=true;startX=e.clientX;scrollLeft=colEl.scrollLeft;}function onMove(e){if(!isDown)return;const dx=e.clientX-startX;if(Math.abs(dx)>3){colEl.classList.add('grabbing');colEl.scrollLeft=scrollLeft-dx;}}function onUp(){isDown=false;colEl.classList.remove('grabbing');}colEl.addEventListener('mousedown',onDown);window.addEventListener('mousemove',onMove);window.addEventListener('mouseup',onUp);}
+// ── TOOLTIP ──
+const ttEl=document.getElementById('tooltip');
+function showTT(e,t){const wd=workdays(t.start,t.end);const calD=Math.round((new Date(t.end)-new Date(t.start))/86400000)+1;const overdue=t.deadline&&new Date(t.deadline)<TODAY&&t.progress<100;ttEl.style.display='block';ttEl.innerHTML=`<div class="tt-t" style="color:${gc(t.task)}">${t.task}${t.machine?` <span style="font-size:8px;padding:0 3px;border-radius:3px;background:${(MCH_STYLES[t.machine]||{bg:'#eee'}).bg};color:${(MCH_STYLES[t.machine]||{text:'#666'}).text};">${t.machine}</span>`:''}</div><div class="tt-r"><span>製品</span><span>${t.product}</span></div><div class="tt-r"><span>営業</span><span>${productSales[t.product]||'—'}</span></div><div class="tt-r"><span>開始</span><span>${fd(t.start)}</span></div><div class="tt-r"><span>終了</span><span>${fd(t.end)}</span></div><div class="tt-r"><span>納期</span><span style="color:${overdue?'#e24b4a':'inherit'}">${t.deadline?fd(t.deadline):'—'}${overdue?' ⚠':''}</span></div><div class="tt-r"><span>日数</span><span>${calD}日(実${wd}日)</span></div><div class="tt-r"><span>進捗</span><span>${t.progress}%</span></div><div class="tt-b"><div class="tt-f" style="width:${t.progress}%;background:${gc(t.task)};"></div></div>${t.memo?`<div class="tt-r"><span>メモ</span><span style="color:var(--text);">${t.memo}</span></div>`:""}<div style="margin-top:3px;font-size:9px;color:var(--text3);">クリックで編集</div>`;moveTT(e);}
+function moveTT(e){ttEl.style.left=(e.clientX+12)+'px';ttEl.style.top=(e.clientY-8)+'px';}
+function hideTT(){ttEl.style.display='none';}
+// ── HOLDING ──
+function renderHolding(){const cards=document.getElementById('holdCards');document.getElementById('holdCount').textContent=soonItems.length+'件';cards.innerHTML='';if(!holdingOpen){cards.style.display='none';return;}cards.style.display='flex';soonItems.forEach((s,i)=>{const[cb,cf]=CAT_STYLES[s.cat]||['#888','#fff'];const gc2=ghostC(i);const card=document.createElement('div');card.className='sc';card.style.borderLeft=`3px solid ${gc2}`;card.innerHTML=`<div class="sc-hd"><div class="sc-name">${s.product}</div><span style="font-size:9px;padding:1px 4px;border-radius:7px;font-weight:600;background:${cb};color:${cf};flex-shrink:0;">${s.cat}</span></div>${s.sales?`<div class="sc-row"><i class="ti ti-briefcase" style="font-size:9px;"></i><span>${s.sales}</span></div>`:''}<div class="sc-row"><i class="ti ti-calendar" style="font-size:9px;"></i><span>${s.estimate||'時期未定'}</span></div>${s.days?`<div class="sc-row"><i class="ti ti-clock" style="font-size:9px;"></i><span>約${s.days}営業日</span></div>`:''}${s.memo?`<div class="sc-row"><i class="ti ti-note" style="font-size:9px;"></i><span>${s.memo}</span></div>`:''}`;card.addEventListener('click',()=>openEditSoon(s.id));cards.appendChild(card);});const ab=document.createElement('button');ab.className='sc-add';ab.title='商品化待ち追加';ab.innerHTML='<i class="ti ti-plus"></i>';ab.onclick=()=>openSoonModal();cards.appendChild(ab);}
+function toggleHolding(){holdingOpen=!holdingOpen;document.getElementById('holdIcon').innerHTML=holdingOpen?'<i class="ti ti-chevron-up"></i>':'<i class="ti ti-chevron-down"></i>';saveData();renderHolding();}
+function collapseAll(s){productOrder.forEach(p=>collapsed[p]=s);saveData();render();}
+// ── PRODUCT MODAL (Step1→Step2) ──
+let _editingProduct=null;
+function openProductModal(){
+  _editingProduct=null;newProdData=null;newTasks=[];
+  document.getElementById('prodModalTitle').innerHTML='<i class="ti ti-package" style="color:var(--blue);"></i> 製品を新規登録';
+  document.getElementById('pName').value='';document.getElementById('pCat').value='本型';document.getElementById('pSales').value='';document.getElementById('pDeadline').value='';document.getElementById('pMemo').value='';
+  showProdStep(1);document.getElementById('prodModalBg').classList.add('open');setTimeout(()=>document.getElementById('pName').focus(),50);
+}
+function openProductEditModal(product){
+  _editingProduct=product;const meta=productMeta[product]||{};
+  document.getElementById('prodModalTitle').innerHTML=`<i class="ti ti-edit" style="color:var(--blue);"></i> 製品情報を編集`;
+  document.getElementById('pName').value=product;document.getElementById('pCat').value=meta.cat||tasks.find(t=>t.product===product)?.cat||'本型';document.getElementById('pSales').value=productSales[product]||'';document.getElementById('pDeadline').value=meta.deadline||'';document.getElementById('pMemo').value=meta.memo||'';
+  showProdStep(1);document.getElementById('prodModalBg').classList.add('open');
+}
+function showProdStep(n){
+  document.getElementById('prodStep1').style.display=n===1?'block':'none';
+  document.getElementById('prodStep2').style.display=n===2?'block':'none';
+  ['step1-ind','step2-ind'].forEach((id,i)=>{const el=document.getElementById(id);el.className='step-item'+(i+1===n?' active':i+1<n?' done':'');});
+}
+function prodStep1Next(){
+  const name=document.getElementById('pName').value.trim();if(!name){alert('製品名を入力してください');return;}
+  newProdData={name,cat:document.getElementById('pCat').value,sales:document.getElementById('pSales').value.trim(),deadline:document.getElementById('pDeadline').value,memo:document.getElementById('pMemo').value.trim()};
+  // Save product info immediately
+  if(!_editingProduct){
+    if(!productOrder.includes(name))productOrder.push(name);
+  } else {
+    // rename if needed
+    const oldName=_editingProduct;if(name!==oldName){tasks.forEach(t=>{if(t.product===oldName)t.product=name;});const idx=productOrder.indexOf(oldName);if(idx>=0)productOrder[idx]=name;if(productSales[oldName]){productSales[name]=productSales[oldName];delete productSales[oldName];}if(productMeta[oldName]){productMeta[name]=productMeta[oldName];delete productMeta[oldName];}}_editingProduct=name;
+  }
+  productSales[name]=newProdData.sales;productMeta[name]={cat:newProdData.cat,deadline:newProdData.deadline,memo:newProdData.memo};
+  // Also update cat on existing tasks for this product
+  tasks.filter(t=>t.product===name).forEach(t=>{t.cat=newProdData.cat;if(newProdData.deadline)t.deadline=newProdData.deadline;});
+  saveData();updateSalesFilter();
+  // Go to step2
+  newTasks=[];renderAddedTasks();updateCopySrcList();
+  document.getElementById('prodStep2Info').innerHTML=`<b>${name}</b> <span style="font-size:10px;color:var(--text2);">| ${newProdData.cat} | 営業: ${newProdData.sales||'未設定'} | 納期: ${newProdData.deadline||'未設定'}</span>`;
+  document.getElementById('tStart').value=fi(TODAY);document.getElementById('tEnd').value='';document.getElementById('tPerson').value='';document.getElementById('tPrg').value='0';toggleMF();
+  showProdStep(2);
+}
+function prodStep2Back(){showProdStep(1);}
+function prodStep2Save(){
+  // newTasks were already added to main tasks in addTaskToNew
+  closeModal('prodModalBg');buildAll();showToast('製品を登録しました');
+}
+function toggleMF(){const t=document.getElementById('tTask').value;document.getElementById('tMachWrap').style.display=t==='切削'?'block':'none';}
+function addTaskToNew(){
+  const task=document.getElementById('tTask').value;const machine=task==='切削'?document.getElementById('tMach').value:'';
+  const start=document.getElementById('tStart').value;const end=document.getElementById('tEnd').value;
+  if(!start||!end){alert('開始日と終了日を入力してください');return;}
+  const name=newProdData.name;
+  const newT={id:Date.now()+Math.random(),product:name,task,machine,person:document.getElementById('tPerson').value.trim(),start,end,deadline:newProdData.deadline,progress:parseInt(document.getElementById('tPrg').value)||0,cat:newProdData.cat};
+  tasks.push(newT);newTasks.push(newT);
+  // advance start for next task
+  const nextStart=new Date(end);nextStart.setDate(nextStart.getDate()+1);document.getElementById('tStart').value=fi(nextStart);document.getElementById('tEnd').value='';document.getElementById('tPrg').value='0';
+  renderAddedTasks();saveData();showToast(`${task}工程を追加しました`);
+}
+function renderAddedTasks(){
+  const el=document.getElementById('addedTasksList');
+  if(!newTasks.length){el.innerHTML='<div style="padding:8px 10px;font-size:11px;color:var(--text3);">工程がまだ追加されていません</div>';return;}
+  el.innerHTML=newTasks.map((t,i)=>`<div style="display:flex;align-items:center;gap:7px;padding:5px 10px;border-bottom:1px solid var(--border);font-size:11px;${i===newTasks.length-1?'border-bottom:none;':''}"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${gc(t.task)};"></span><span style="font-weight:600;">${t.task}</span>${t.machine?`<span style="font-size:9px;padding:0 4px;border-radius:3px;background:${(MCH_STYLES[t.machine]||{bg:'#eee'}).bg};color:${(MCH_STYLES[t.machine]||{text:'#666'}).text};">${t.machine}</span>`:''}<span style="color:var(--text2);">${t.start} 〜 ${t.end}</span><span style="margin-left:auto;color:var(--text3);">${t.progress}%</span><button onclick="removeNewTask(${i})" style="padding:1px 4px;font-size:9px;color:var(--danger-text);border-color:var(--danger-border);background:var(--danger-bg);">✕</button></div>`).join('');
+}
+function removeNewTask(i){const t=newTasks[i];tasks=tasks.filter(x=>x.id!==t.id);newTasks.splice(i,1);renderAddedTasks();saveData();}
+// Copy feature
+function toggleCopyPanel(){const p=document.getElementById('copyPanel');p.style.display=p.style.display==='none'?'block':'none';document.getElementById('copyPanelBtn').classList.toggle('active-seg',p.style.display!=='none');}
+function updateCopySrcList(){const sel=document.getElementById('copySrcProd');sel.innerHTML='<option value="">製品を選択...</option>';productOrder.filter(p=>p!==newProdData?.name).forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o);});}
+function renderCopyList(){
+  const src=document.getElementById('copySrcProd').value;const el=document.getElementById('copyList');el.innerHTML='';copySelected=[];
+  if(!src)return;const srcTasks=tasks.filter(t=>t.product===src);
+  srcTasks.forEach((t,i)=>{const item=document.createElement('div');item.className='copy-item';item.dataset.idx=i;item.innerHTML=`<input type="checkbox" id="cpy${i}" style="accent-color:var(--blue);"><label for="cpy${i}" style="cursor:pointer;display:flex;align-items:center;gap:6px;flex:1;"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${gc(t.task)};"></span><span style="font-weight:600;">${t.task}</span>${t.machine?`<span style="font-size:9px;padding:0 4px;border-radius:3px;background:${(MCH_STYLES[t.machine]||{bg:'#eee'}).bg};color:${(MCH_STYLES[t.machine]||{text:'#666'}).text};">${t.machine}</span>`:''}<span style="color:var(--text2);font-size:11px;">${t.start}〜${t.end}</span></label>`;item.querySelector('input').addEventListener('change',e=>{if(e.target.checked)copySelected.push(t);else copySelected=copySelected.filter(x=>x.id!==t.id);});el.appendChild(item);});
+}
+function execCopyTasks(){
+  if(!copySelected.length){alert('コピーする工程を選択してください');return;}
+  if(!newProdData){alert('先に製品情報を入力してください');return;}
+  copySelected.forEach(t=>{const newT={id:Date.now()+Math.random(),product:newProdData.name,task:t.task,machine:t.machine,person:t.person,start:t.start,end:t.end,deadline:newProdData.deadline,progress:0,cat:newProdData.cat};tasks.push(newT);newTasks.push(newT);});
+  renderAddedTasks();saveData();showToast(`${copySelected.length}工程をコピーしました`);copySelected=[];document.querySelectorAll('#copyList input[type=checkbox]').forEach(cb=>cb.checked=false);
+}
+// Add task to existing product (from + button)
+function openAddTaskToProduct(product){
+  newProdData={name:product,cat:productMeta[product]?.cat||tasks.find(t=>t.product===product)?.cat||'本型',deadline:productMeta[product]?.deadline||''};newTasks=[];
+  document.getElementById('prodModalTitle').innerHTML=`<i class="ti ti-plus" style="color:var(--blue);"></i> 工程を追加 — ${product}`;
+  document.getElementById('prodStep2Info').innerHTML=`<b>${product}</b>への工程を追加します。`;
+  document.getElementById('tStart').value=fi(TODAY);document.getElementById('tEnd').value='';document.getElementById('tPerson').value='';document.getElementById('tPrg').value='0';toggleMF();
+  updateCopySrcList();renderAddedTasks();
+  document.getElementById('prodStep1').style.display='none';document.getElementById('prodStep2').style.display='block';
+  document.getElementById('stepBar').style.display='none';
+  document.getElementById('prodModalBg').classList.add('open');
+}
+// ── TASK EDIT MODAL ──
+function populateProductSelect(selectedProduct){const sel=document.getElementById('eProduct');sel.innerHTML='';productOrder.forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;if(p===selectedProduct)o.selected=true;sel.appendChild(o);});}
+function toggleEMF(){const t=document.getElementById('eTask').value;document.getElementById('eMachWrap').style.display=t==='切削'?'block':'none';}
+function openEditTask(id){
+  const t=tasks.find(x=>x.id===id);if(!t)return;editingTaskId=id;
+  document.getElementById('taskModalTitle').innerHTML='<i class="ti ti-edit" style="color:var(--blue);"></i> 工程を編集';
+  populateProductSelect(t.product);
+  document.getElementById('eTask').value=t.task;document.getElementById('eMach').value=t.machine||'';document.getElementById('ePerson').value=t.person||'';document.getElementById('eStart').value=t.start;document.getElementById('eEnd').value=t.end;document.getElementById('ePrg').value=t.progress;document.getElementById('ePrgV').textContent=t.progress+'%';
+  document.getElementById('eMemo').value=t.memo||'';
+  toggleEMF();document.getElementById('taskModalBg').classList.add('open');
+}
+function saveTask(){
+  const t=tasks.find(x=>x.id===editingTaskId);if(!t)return;
+  const task=document.getElementById('eTask').value;t.product=document.getElementById('eProduct').value;t.task=task;t.machine=task==='切削'?document.getElementById('eMach').value:'';t.person=document.getElementById('ePerson').value.trim();t.start=document.getElementById('eStart').value;t.end=document.getElementById('eEnd').value;t.progress=parseInt(document.getElementById('ePrg').value)||0;
+  t.memo=document.getElementById('eMemo').value.trim();
+  closeModal('taskModalBg');saveData();buildAll();showToast('工程を保存しました');
+}
+function deleteTask(){if(!confirm('この工程を削除しますか？'))return;tasks=tasks.filter(x=>x.id!==editingTaskId);closeModal('taskModalBg');saveData();buildAll();showToast('削除しました');}
+function duplicateTask(){
+  const t=tasks.find(x=>x.id===editingTaskId);if(!t)return;
+  const newT={...t,id:Date.now(),progress:0};tasks.push(newT);closeModal('taskModalBg');saveData();buildAll();showToast('複製しました。日程を調整してください');setTimeout(()=>openEditTask(newT.id),300);
+}
+// ── SOON MODAL ──
+function openSoonModal(){
+  editingSoonId=null;document.getElementById('soonModalTitle').innerHTML='<i class="ti ti-star" style="color:var(--warn);"></i> 商品化待ちを追加';
+  document.getElementById('sName').value='';document.getElementById('sCat').value='本型';document.getElementById('sSales').value='';document.getElementById('sEstimate').value='';document.getElementById('sDays').value='';document.getElementById('sMemo').value='';
+  document.getElementById('sDeleteBtn').style.display='none';document.getElementById('sPromoteBtn').style.display='none';
+  document.getElementById('soonModalBg').classList.add('open');setTimeout(()=>document.getElementById('sName').focus(),50);
+}
+function openEditSoon(id){
+  const s=soonItems.find(x=>x.id===id);if(!s)return;editingSoonId=id;
+  document.getElementById('soonModalTitle').innerHTML='<i class="ti ti-star" style="color:var(--warn);"></i> 商品化待ちを編集';
+  document.getElementById('sName').value=s.product;document.getElementById('sCat').value=s.cat;document.getElementById('sSales').value=s.sales||'';document.getElementById('sEstimate').value=s.estimate||'';document.getElementById('sDays').value=s.days||'';document.getElementById('sMemo').value=s.memo||'';
+  document.getElementById('sDeleteBtn').style.display='';document.getElementById('sPromoteBtn').style.display='';
+  document.getElementById('soonModalBg').classList.add('open');
+}
+function saveSoon(){
+  const name=document.getElementById('sName').value.trim();if(!name)return;
+  const d={product:name,cat:document.getElementById('sCat').value,sales:document.getElementById('sSales').value.trim(),estimate:document.getElementById('sEstimate').value.trim(),days:parseInt(document.getElementById('sDays').value)||0,memo:document.getElementById('sMemo').value.trim()};
+  if(editingSoonId){const i=soonItems.findIndex(x=>x.id===editingSoonId);soonItems[i]={...soonItems[i],...d};}else soonItems.push({id:'s'+Date.now(),...d});
+  closeModal('soonModalBg');saveData();buildAll();showToast('保存しました');
+}
+function deleteSoon(){if(!confirm('削除しますか？'))return;soonItems=soonItems.filter(x=>x.id!==editingSoonId);closeModal('soonModalBg');saveData();buildAll();showToast('削除しました');}
+function promoteSoon(){const s=soonItems.find(x=>x.id===editingSoonId);if(!s)return;soonItems=soonItems.filter(x=>x.id!==editingSoonId);saveData();closeModal('soonModalBg');
+  newProdData={name:s.product,cat:s.cat,sales:s.sales||'',deadline:'',memo:s.memo||''};
+  document.getElementById('pName').value=s.product;document.getElementById('pCat').value=s.cat;document.getElementById('pSales').value=s.sales||'';document.getElementById('pDeadline').value='';document.getElementById('pMemo').value=s.memo||'';
+  if(!productOrder.includes(s.product))productOrder.push(s.product);productSales[s.product]=s.sales||'';productMeta[s.product]={cat:s.cat,deadline:'',memo:s.memo||''};saveData();
+  newTasks=[];renderAddedTasks();updateCopySrcList();
+  document.getElementById('prodModalTitle').innerHTML=`<i class="ti ti-arrow-up" style="color:var(--green);"></i> 工程登録へ昇格 — ${s.product}`;
+  document.getElementById('prodStep2Info').innerHTML=`<b>${s.product}</b> を商品化待ちから昇格しました。工程を追加してください。`;
+  document.getElementById('tStart').value=fi(TODAY);document.getElementById('tEnd').value='';document.getElementById('tPrg').value='0';toggleMF();
+  document.getElementById('stepBar').style.display='none';document.getElementById('prodStep1').style.display='none';document.getElementById('prodStep2').style.display='block';
+  document.getElementById('prodModalBg').classList.add('open');
+}
+// ── PROD SALES MODAL ──
+function openProdSalesModal(){
+  const list=document.getElementById('pslList');list.innerHTML='';
+  const allProds=[...new Set([...productOrder,...soonItems.map(s=>s.product)])];
+  allProds.forEach(p=>{const item=document.createElement('div');item.className='psl-item';const nm=document.createElement('div');nm.className='psl-prod';nm.title=p;nm.textContent=p;const sd=document.createElement('div');sd.style.flex='1';const inp=document.createElement('input');inp.type='text';inp.value=productSales[p]||'';inp.placeholder='営業担当者名';inp.dataset.product=p;sd.appendChild(inp);item.appendChild(nm);item.appendChild(sd);list.appendChild(item);});
+  document.getElementById('prodSalesBg').classList.add('open');
+}
+function saveProdSales(){document.querySelectorAll('#pslList input').forEach(inp=>{const p=inp.dataset.product;if(p)productSales[p]=inp.value.trim();});saveData();updateSalesFilter();updateDashFilters();render();closeModal('prodSalesBg');showToast('営業担当を保存しました');}
+// ── HOLIDAY ──
+function openHolModal(){renderHolList();document.getElementById('holModalBg').classList.add('open');}
+function renderHolList(){const list=document.getElementById('holList');list.innerHTML='';const keys=Object.keys(holidays).sort();if(!keys.length){list.innerHTML='<div style="padding:8px 10px;font-size:11px;color:var(--text3);">登録なし</div>';return;}keys.forEach(ds=>{const item=document.createElement('div');item.className='hol-item';const d=new Date(ds);item.innerHTML=`<span>${ds}(${DAY_NAMES[d.getDay()]}) ${holidays[ds]||''}</span>`;const del=document.createElement('button');del.className='hol-del';del.innerHTML='<i class="ti ti-x"></i>';del.onclick=()=>{delete holidays[ds];saveData();renderHolList();buildAll();};item.appendChild(del);list.appendChild(item);});}
+function addHoliday(){const ds=document.getElementById('newHolDate').value;const nm=document.getElementById('newHolName').value.trim();if(!ds)return;holidays[ds]=nm||'休日';document.getElementById('newHolDate').value='';document.getElementById('newHolName').value='';saveData();renderHolList();buildAll();}
+function clearHolidays(){if(!confirm('すべての休日を削除しますか？'))return;holidays={};saveData();renderHolList();buildAll();}
+// ── DASHBOARD ──
+function setDP(p){dashPeriod=p;['month','year','h1','h2'].forEach(v=>{const el=document.getElementById('dp-'+v);if(el)el.classList.remove('active-seg');});const el=document.getElementById('dp-'+p);if(el)el.classList.add('active-seg');buildDashboard();}
+function updateDashFilters(){const sel=document.getElementById('dashSalesF');const cur=sel.value;sel.innerHTML='<option value="">営業担当: 全員</option>';[...new Set(Object.values(productSales).filter(Boolean))].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;if(s===cur)o.selected=true;sel.appendChild(o);});}
+function getPeriodKey(ds){const d=new Date(ds);const y=d.getFullYear(),m=d.getMonth();if(dashPeriod==='month')return `${y}/${String(m+1).padStart(2,'0')}`;if(dashPeriod==='year')return `${y}年`;if(dashPeriod==='h1')return m>=5&&m<=10?`${y}年上期`:`${y+(m<=4?0:1)}年上期`;return m>=11?`${y}/${y+1}下期`:m<=4?`${y-1}/${y}下期`:`${y}年上期`;}
+function buildDashboard(){
+  try{
+  const el=document.getElementById('dashContent');if(!el)return;
+  const fS=document.getElementById('dashSalesF').value;const fC=document.getElementById('dashCatF').value;
+  let ft=tasks.filter(t=>{if(fS&&productSales[t.product]!==fS)return false;if(fC&&t.cat!==fC)return false;return true;});
+  const prods=[...new Set(ft.map(t=>t.product))];
+  const total=prods.length;const done=prods.filter(p=>ft.filter(t=>t.product===p).every(t=>t.progress===100)).length;
+  const inProg=prods.filter(p=>{const pt=ft.filter(t=>t.product===p);return pt.some(t=>t.progress>0)&&!pt.every(t=>t.progress===100);}).length;
+  const notS=total-done-inProg;
+  const prodMap={};ft.forEach(t=>{if(!prodMap[t.product])prodMap[t.product]={tasks:[],cat:t.cat,deadline:productMeta[t.product]?.deadline||t.deadline||''};prodMap[t.product].tasks.push(t);});
+  const prodList=Object.entries(prodMap).map(([name,v])=>{const td=v.tasks.reduce((s,t)=>s+Math.max(1,Math.round((new Date(t.end)-new Date(t.start))/86400000)),0);const dd=v.tasks.reduce((s,t)=>s+Math.max(1,Math.round((new Date(t.end)-new Date(t.start))/86400000))*(t.progress/100),0);const pct=td>0?Math.round(dd/td*100):0;const isOver=v.deadline&&new Date(v.deadline)<TODAY&&pct<100;return{name,pct,cat:v.cat,sales:productSales[name]||'—',deadline:v.deadline,isOver,memo:productMeta[name]?.memo||''};});
+  const catCount={};ft.forEach(t=>{catCount[t.cat]=(catCount[t.cat]||0)+1;});
+  const periodMap={};ft.forEach(t=>{const pk=getPeriodKey(t.end);if(!periodMap[pk])periodMap[pk]={total:0,done:0};periodMap[pk].total++;if(t.progress===100)periodMap[pk].done++;});
+  const pKeys=Object.keys(periodMap).sort();const maxP=Math.max(...pKeys.map(k=>periodMap[k].total),1);
+  const machWD={V56:0,ROBO:0,未割当:0};tasks.filter(t=>t.task==='切削').forEach(t=>{const k=t.machine||'未割当';machWD[k]=(machWD[k]||0)+workdays(t.start,t.end);});
+  const maxMWD=Math.max(...Object.values(machWD),1);
+  const taskDays={};ft.forEach(t=>{if(!taskDays[t.task])taskDays[t.task]=[];taskDays[t.task].push(workdays(t.start,t.end));});
+  // 営業担当別：工程数ではなく製品点数でカウント
+  const salesMap={};
+  const _prodSet={};
+  ft.forEach(t=>{
+    const s=productSales[t.product]||'未設定';
+    if(!salesMap[s])salesMap[s]={prods:new Set(),done:new Set()};
+    salesMap[s].prods.add(t.product);
+    const pt=ft.filter(x=>x.product===t.product);
+    if(pt.every(x=>x.progress===100))salesMap[s].done.add(t.product);
+  });
+
+  el.innerHTML=`
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val">${total}</div><div class="kpi-lbl">製品数</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--green);">${done}</div><div class="kpi-lbl">完了</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--blue);">${inProg}</div><div class="kpi-lbl">進行中</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--text3);">${notS}</div><div class="kpi-lbl">未着手</div></div>
+  </div>
+  <!-- 製品一覧テーブル（最上段） -->
+  <div class="dc full" style="margin-bottom:12px;">
+    <h4><i class="ti ti-table"></i> 製品 ＋ 商品化待ち 一覧</h4>
+    <table class="dt">
+      <thead><tr><th>製品名</th><th>カテゴリ</th><th>営業担当</th><th>納期</th><th>進捗</th><th>状態</th><th>メモ</th></tr></thead>
+      <tbody>
+        ${prodList.map(p=>{const[cb,cf]=CAT_STYLES[p.cat]||['#888','#fff'];return`<tr><td style="font-weight:500;">${p.name}</td><td><span style="font-size:9px;padding:1px 4px;border-radius:7px;font-weight:600;background:${cb};color:${cf};">${p.cat}</span></td><td style="color:var(--text2);">${p.sales}</td><td style="color:${p.isOver?'#e24b4a':'inherit'};">${p.deadline||'—'}</td><td><div style="display:flex;align-items:center;gap:4px;"><div style="flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;min-width:40px;"><div style="height:100%;width:${p.pct}%;background:${p.pct===100?'#0f6e56':p.isOver?'#e24b4a':'#185fa5'};border-radius:3px;"></div></div><span style="font-size:10px;font-weight:600;min-width:26px;">${p.pct}%</span></div></td><td><span class="sbadge" style="background:${p.pct===100?'#e1f5ee':p.isOver?'#fcebeb':p.pct>0?'#e6f1fb':'#f1efe8'};color:${p.pct===100?'#085041':p.isOver?'#791f1f':p.pct>0?'#0c447c':'#5f5e5a'};">${p.pct===100?'完了':p.isOver?'遅延':p.pct>0?'進行中':'未着手'}</span></td><td style="color:var(--text3);font-size:10px;">${p.memo||''}</td></tr>`;}).join('')}
+        ${soonItems.filter(s=>!fS||(productSales[s.product]||s.sales||'')===fS).filter(s=>!fC||s.cat===fC).map(s=>{const[cb,cf]=CAT_STYLES[s.cat]||['#888','#fff'];return`<tr style="background:#fffbf4;"><td><i class="ti ti-star" style="font-size:9px;color:var(--warn);margin-right:2px;"></i><span style="font-weight:500;">${s.product}</span></td><td><span style="font-size:9px;padding:1px 4px;border-radius:7px;font-weight:600;background:${cb};color:${cf};">${s.cat}</span></td><td style="color:var(--text2);">${productSales[s.product]||s.sales||'—'}</td><td style="color:var(--text3);">${s.estimate||'未定'}</td><td style="color:var(--text3);font-size:10px;">${s.days?`約${s.days}営業日`:'—'}</td><td><span class="sbadge" style="background:var(--warn-bg);color:var(--warn-text);">待機中</span></td><td style="color:var(--text3);font-size:10px;">${s.memo||''}</td></tr>`;}).join('')}
+      </tbody>
+    </table>
+  </div>
+  <div class="dash-grid">
+    <div class="dc">
+      <h4><i class="ti ti-chart-bar"></i> 製品別 進捗状況</h4>
+      ${prodList.map(p=>`<div class="pi"><div class="pi-name" title="${p.name}">${p.name}</div><div class="pi-bar"><div class="pi-fill" style="width:${p.pct}%;background:${p.pct===100?'#0f6e56':p.isOver?'#e24b4a':'#185fa5'};"></div></div><div class="pi-pct">${p.pct}%</div><span class="sbadge" style="background:${p.pct===100?'#e1f5ee':p.isOver?'#fcebeb':p.pct>0?'#e6f1fb':'#f1efe8'};color:${p.pct===100?'#085041':p.isOver?'#791f1f':p.pct>0?'#0c447c':'#5f5e5a'};">${p.pct===100?'完了':p.isOver?'遅延':p.pct>0?'進行中':'未着手'}</span></div>`).join('')}
+    </div>
+    <div class="dc">
+      <h4><i class="ti ti-tag"></i> カテゴリ別 加工件数</h4>
+      ${Object.entries(catCount).map(([cat,cnt])=>{const[cb,cf]=CAT_STYLES[cat]||['#888','#fff'];return`<div class="cat-row"><span style="font-size:10px;font-weight:600;min-width:78px;padding:1px 5px;border-radius:7px;background:${cb};color:${cf};">${cat}</span><div class="cat-bw"><div class="cat-b" style="width:${Math.round(cnt/ft.length*100)}%;background:${cb};"></div></div><span style="font-size:11px;color:var(--text2);min-width:20px;text-align:right;">${cnt}</span></div>`;}).join('')}
+    </div>
+    <div class="dc">
+      <h4><i class="ti ti-users"></i> 営業担当別 担当件数</h4>
+      ${Object.entries(salesMap).sort((a,b)=>b[1].prods.size-a[1].prods.size).map(([s,v])=>`<div class="cat-row"><span style="font-size:11px;min-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s}</span><div class="cat-bw"><div class="cat-b" style="width:${Math.round(v.prods.size/Math.max(1,prodList.length)*100)}%;background:var(--purple);"></div></div><span style="font-size:11px;color:var(--text2);min-width:50px;text-align:right;">${v.done.size}/${v.prods.size}製品</span></div>`).join('')}
+    </div>
+    <div class="dc">
+      <h4><i class="ti ti-clock"></i> 工程別 平均リードタイム（実稼働日）</h4>
+      ${Object.entries(taskDays).map(([task,days])=>{const avg=Math.round(days.reduce((a,b)=>a+b,0)/days.length);const maxAvg=Math.max(...Object.values(taskDays).map(d=>Math.round(d.reduce((a,b)=>a+b,0)/d.length)));return`<div class="cat-row"><span style="font-size:11px;min-width:50px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${PROC_COLORS[task]||'#888'};"></span>${task}</span><div class="cat-bw"><div class="cat-b" style="width:${Math.round(avg/maxAvg*100)}%;background:${PROC_COLORS[task]||'#888'};"></div></div><span style="font-size:11px;color:var(--text2);min-width:40px;text-align:right;">平均${avg}日</span></div>`;}).join('')}
+    </div>
+    <div class="dc">
+      <h4><i class="ti ti-chart-bar"></i> ${dashPeriod==='month'?'月別':dashPeriod==='year'?'年別':'期間別'} 着工・完了件数</h4>
+      ${(()=>{
+        const pkMap={};
+        ft.forEach(t=>{
+          const sp=getPeriodKey(t.start);
+          const ep=getPeriodKey(t.end);
+          if(!pkMap[sp])pkMap[sp]={start:0,done:0};
+          pkMap[sp].start++;
+          if(t.progress===100){
+            if(!pkMap[ep])pkMap[ep]={start:0,done:0};
+            pkMap[ep].done++;
+          }
+        });
+        const keys=Object.keys(pkMap).sort().slice(-8);
+        const maxV=Math.max(...keys.map(k=>Math.max(pkMap[k].start,pkMap[k].done)),1);
+        const shortLbl=k=>dashPeriod==='month'?k.slice(5)+'月':dashPeriod==='year'?k.replace('年',''):k.replace(/\d{4}年?\/?\d{0,4}/,'').replace('上期','上').replace('下期','下')||k;
+        return'<div style="display:flex;align-items:flex-end;gap:4px;height:90px;margin-top:4px;">'
+          +keys.map(k=>{
+            const v=pkMap[k];
+            const hS=Math.round(v.start/maxV*100);
+            const hD=Math.round(v.done/maxV*100);
+            return'<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;">'
+              +'<div style="width:100%;height:70px;display:flex;align-items:flex-end;gap:1px;">'
+              +'<div style="flex:1;background:#93c5fd;border-radius:2px 2px 0 0;height:'+hS+'%;min-height:1px;" title="着工:'+v.start+'件"></div>'
+              +'<div style="flex:1;background:#0f6e56;border-radius:2px 2px 0 0;height:'+hD+'%;min-height:1px;" title="完了:'+v.done+'件"></div>'
+              +'</div>'
+              +'<div style="font-size:8px;color:var(--text3);text-align:center;white-space:nowrap;">'+shortLbl(k)+'</div>'
+              +'</div>';
+          }).join('')
+          +'</div>'
+          +'<div style="display:flex;gap:10px;margin-top:5px;font-size:10px;color:var(--text2);">'
+          +'<span><span style="display:inline-block;width:8px;height:8px;background:#93c5fd;border-radius:1px;margin-right:3px;"></span>着工</span>'
+          +'<span><span style="display:inline-block;width:8px;height:8px;background:#0f6e56;border-radius:1px;margin-right:3px;"></span>完了</span>'
+          +'</div>';
+      })()}
+    </div>
+    <div class="dc">
+      <h4><i class="ti ti-cpu"></i> V56 / ROBO 月別稼働日数</h4>
+      ${(()=>{
+        const mchMap={};
+        tasks.filter(t=>t.task==='切削').forEach(t=>{
+          if(!t.start||!t.end)return;
+          const m=t.start.slice(0,7);
+          if(!mchMap[m])mchMap[m]={V56:0,ROBO:0};
+          const mch=t.machine||'未割当';
+          if(mch==='V56'||mch==='ROBO')mchMap[m][mch]=(mchMap[m][mch]||0)+workdays(t.start,t.end);
+        });
+        const keys=Object.keys(mchMap).sort().slice(-8);
+        const maxV=Math.max(...keys.map(k=>Math.max(mchMap[k].V56||0,mchMap[k].ROBO||0)),1);
+        return'<div style="display:flex;align-items:flex-end;gap:4px;height:90px;margin-top:4px;">'
+          +keys.map(k=>{
+            const v=mchMap[k];
+            const h56=Math.round((v.V56||0)/maxV*100);
+            const hRB=Math.round((v.ROBO||0)/maxV*100);
+            const lbl=k.slice(5)+'月';
+            return'<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;">'
+              +'<div style="width:100%;height:70px;display:flex;align-items:flex-end;gap:1px;">'
+              +'<div style="flex:1;background:#3b82f6;border-radius:2px 2px 0 0;height:'+h56+'%;min-height:1px;" title="V56:'+v.V56+'日"></div>'
+              +'<div style="flex:1;background:#22c55e;border-radius:2px 2px 0 0;height:'+hRB+'%;min-height:1px;" title="ROBO:'+v.ROBO+'日"></div>'
+              +'</div>'
+              +'<div style="font-size:8px;color:var(--text3);text-align:center;">'+lbl+'</div>'
+              +'</div>';
+          }).join('')
+          +'</div>'
+          +'<div style="display:flex;gap:10px;margin-top:5px;font-size:10px;color:var(--text2);">'
+          +'<span><span style="display:inline-block;width:8px;height:8px;background:#3b82f6;border-radius:1px;margin-right:3px;"></span>V56</span>'
+          +'<span><span style="display:inline-block;width:8px;height:8px;background:#22c55e;border-radius:1px;margin-right:3px;"></span>ROBO</span>'
+          +'</div>';
+      })()}
+    </div>
+    <div class="dc full">
+      <h4><i class="ti ti-clock-hour-4"></i> 製品別リードタイム(実稼働日)一覧</h4>
+      ${(()=>{
+        const maxWD=Math.max(...prodList.map(p=>{const pt=ft.filter(t=>t.product===p.name);return pt.reduce((s,t)=>s+workdays(t.start,t.end),0);}),1);
+        return prodList.map(p=>{
+          const pt=ft.filter(t=>t.product===p.name);
+          if(!pt.length)return'';
+          const totalWD=pt.reduce((s,t)=>s+workdays(t.start,t.end),0);
+          const bars=pt.map(t=>{const w=workdays(t.start,t.end);return'<div title="'+t.task+': '+w+'日" style="height:100%;width:'+Math.round(w/maxWD*100)+'%;background:'+gc(t.task)+';flex-shrink:0;min-width:2px;"></div>';}).join('');
+          return'<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">'
+            +'<div style="font-size:11px;min-width:150px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+p.name+'">'+p.name+'</div>'
+            +'<div style="flex:1;height:14px;display:flex;border-radius:3px;overflow:hidden;gap:1px;">'+bars+'</div>'
+            +'<div style="font-size:11px;color:var(--text2);min-width:55px;text-align:right;white-space:nowrap;">計 '+totalWD+'日</div>'
+            +'</div>';
+        }).join('');
+      })()}
+    </div>
+  </div>`;
+  }catch(e){console.error('Dashboard error:',e);const el2=document.getElementById('dashContent');if(el2)el2.innerHTML='<div style="padding:20px;color:#e24b4a;">ダッシュボードエラー: '+e.message+'</div>';}
+}
+// ── BUILD ALL ──
+function onRangeChange(){
+  const s=document.getElementById('rangeStart').value;
+  const e=document.getElementById('rangeEnd').value;
+  if(!s||!e)return;
+  const ns=new Date(s),ne=new Date(e);
+  if(isNaN(ns.getTime())||isNaN(ne.getTime())||ne<=ns)return;
+  SD=ns;ED=ne;saveData();buildAll();
+}
+function syncRangeInputs(){
+  if(SD&&!isNaN(SD.getTime()))document.getElementById('rangeStart').value=fi(SD);
+  if(ED&&!isNaN(ED.getTime()))document.getElementById('rangeEnd').value=fi(ED);
+}
+
+// Context menu
+let _ctxProduct = null;
+function showCtxMenu(e, product) {
+  _ctxProduct = product;
+  const m = document.getElementById('ctxMenu');
+  m.style.display = 'block'; m.style.left = '0'; m.style.top = '0';
+  const mw = m.offsetWidth||165, mh = m.offsetHeight||120;
+  const x = e.clientX + mw > window.innerWidth ? e.clientX - mw : e.clientX;
+  const y = e.clientY + mh > window.innerHeight ? e.clientY - mh : e.clientY;
+  m.style.left = x + 'px'; m.style.top = y + 'px';
+  e.stopPropagation();
+}
+function hideCtxMenu() { document.getElementById('ctxMenu').style.display = 'none'; _ctxProduct = null; }
+document.addEventListener('click', hideCtxMenu);
+document.addEventListener('keydown', e => { if(e.key==='Escape') hideCtxMenu(); });
+function ctxDuplicate() {
+  const src = _ctxProduct; hideCtxMenu(); if(!src) return;
+  let newName = src + ' コピー', i = 1;
+  while(productOrder.indexOf(newName) >= 0) { newName = src + ' コピー' + i; i++; }
+  productOrder.push(newName);
+  productSales[newName] = productSales[src] || '';
+  productMeta[newName] = Object.assign({}, productMeta[src] || {});
+  tasks.filter(t => t.product === src).forEach(t => {
+    tasks.push(Object.assign({}, t, {id: Date.now() + Math.random(), product: newName, progress: 0}));
+  });
+  saveData(); buildAll(); showToast('「' + newName + '」を作成しました');
+}
+function ctxAddTask() { const p = _ctxProduct; hideCtxMenu(); if(p) openAddTaskToProduct(p); }
+function ctxEdit() { const p = _ctxProduct; hideCtxMenu(); if(p) openProductEditModal(p); }
+function ctxDelete() {
+  const p = _ctxProduct; hideCtxMenu(); if(!p) return;
+  if(!confirm('「' + p + '」とその全工程を削除しますか？')) return;
+  tasks = tasks.filter(t => t.product !== p);
+  productOrder = productOrder.filter(x => x !== p);
+  delete productSales[p]; delete productMeta[p];
+  saveData(); buildAll(); showToast('削除しました');
+}
+
+// ================================================================
+// LABEL COLUMN RESIZE
+// ================================================================
+function initLabelResize() {
+  const handle = document.getElementById('lcResize');
+  const col = document.getElementById('labelCol');
+  if (!handle || !col) return;
+  let startX = 0, startW = 0, dragging = false;
+
+  handle.addEventListener('mousedown', function(e) {
+    dragging = true;
+    startX = e.clientX;
+    startW = col.offsetWidth;
+    handle.classList.add('dragging');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', function(e) {
+    if (!dragging) return;
+    const newW = Math.max(120, Math.min(400, startW + (e.clientX - startX)));
+    col.style.width = newW + 'px';
+    // Update CSS variable so other elements stay in sync
+    document.documentElement.style.setProperty('--lw', newW + 'px');
+  });
+
+  window.addEventListener('mouseup', function() {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    // Save width to localStorage
+    const w = col.offsetWidth;
+    try { localStorage.setItem('gantt_lw', w); } catch(e) {}
+    // Rebuild to refit chart
+    calcDayW(); buildHeader(); render();
+  });
+}
+
+// Restore saved label width
+function restoreLabelWidth() {
+  try {
+    const saved = localStorage.getItem('gantt_lw');
+    if (saved) {
+      const w = parseInt(saved);
+      if (w >= 120 && w <= 400) {
+        const col = document.getElementById('labelCol');
+        if (col) {
+          col.style.width = w + 'px';
+          document.documentElement.style.setProperty('--lw', w + 'px');
+        }
+      }
+    }
+  } catch(e) {}
+}
+
+
+// ── SOON ITEM DRAG ──
+function makeSoonDraggable(bar,s){
+  let dX=0,sL=0,sW=0,mode='move',loc=false;
+  const rh=bar.querySelector('.rh');
+  const pop=document.getElementById('ddpop');
+  function dn(e){mode=e.target.closest('.rh')?'resize':'move';dX=e.clientX;sL=parseInt(bar.style.left)||0;sW=parseInt(bar.style.width)||0;loc=false;_wasDrag=false;_drag=true;document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);e.preventDefault();e.stopPropagation();}
+  function mv(e){const dx=e.clientX-dX;if(Math.abs(dx)>3){loc=true;_wasDrag=true;}if(!loc)return;hideTT();
+    if(mode==='move'){bar.style.left=Math.max(0,sL+dx)+'px';const ns=xToDate(Math.round(Math.max(0,sL+dx)/DAY_W)*DAY_W);const dur=Math.round((new Date(s.barEnd)-new Date(s.barStart))/86400000);const ne=new Date(ns);ne.setDate(ne.getDate()+dur);pop.textContent=fd(ns)+' 〜 '+fd(fi(ne));}
+    else{bar.style.width=Math.max(DAY_W*2,sW+dx)+'px';pop.textContent='終了: '+fd(xToDate((parseInt(bar.style.left)||0)+Math.max(DAY_W*2,Math.round((sW+dx)/DAY_W)*DAY_W)-DAY_W));}
+    pop.style.display='block';pop.style.left=(e.clientX+12)+'px';pop.style.top=(e.clientY-28)+'px';}
+  function up(){document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);pop.style.display='none';_drag=false;
+    if(!loc){_wasDrag=false;return;}
+    if(mode==='move'){const nl=parseInt(bar.style.left)||0,sn=Math.round(nl/DAY_W)*DAY_W;bar.style.left=sn+'px';const dur=Math.round((new Date(s.barEnd)-new Date(s.barStart))/86400000);const ns=xToDate(sn);const ne=new Date(ns);ne.setDate(ne.getDate()+dur);s.barStart=ns;s.barEnd=fi(ne);}
+    else{const nw=Math.max(DAY_W*2,Math.round((parseInt(bar.style.width)||DAY_W*2)/DAY_W)*DAY_W);bar.style.width=nw+'px';s.barEnd=xToDate((parseInt(bar.style.left)||0)+nw-DAY_W);s._manualEnd=s.barEnd;}
+    saveData();setTimeout(()=>{_wasDrag=false;},150);setTimeout(()=>render(),60);}
+  bar.addEventListener('mousedown',dn);
+}
+function showSoonTip(e,s){
+  const psales=productSales[s.product]||s.sales||'—';
+  // barStart/barEnd は描画時に確定済みの実際の位置
+  const barS=s.barStart||'';
+  const barE=s._manualEnd||(s.days>0?addWD(barS,s.days):s.barEnd)||'';
+  const calD=barS&&barE?Math.round((new Date(barE)-new Date(barS))/86400000)+1:'—';
+  const wdCalc=barS&&barE?workdays(barS,barE):'—';
+  ttEl.style.display='block';
+  ttEl.innerHTML='<div class="tt-t" style="color:#854f0b;"><i class="ti ti-star" style="font-size:10px;margin-right:3px;"></i>'+s.product+'</div>'
+    +'<div class="tt-r"><span>カテゴリ</span><span>'+s.cat+'</span></div>'
+    +'<div class="tt-r"><span>営業担当</span><span>'+psales+'</span></div>'
+    +'<div class="tt-r"><span>予定開始</span><span>'+(barS?fd(barS):'未定')+'</span></div>'
+    +'<div class="tt-r"><span>予定終了</span><span>'+(barE?fd(barE):'未定')+'</span></div>'
+    +'<div class="tt-r"><span>暦日数</span><span>'+(calD!=='—'?calD+'日':'—')+'</span></div>'
+    +'<div class="tt-r"><span>実稼働日</span><span>'+(wdCalc!=='—'?wdCalc+'日':'—')+'</span></div>'
+    +(s.days?'<div class="tt-r"><span>予想加工日数</span><span>'+s.days+'営業日</span></div>':'')
+    +(s.estimate?'<div class="tt-r"><span>予定時期</span><span>'+s.estimate+'</span></div>':'')
+    +(s.memo?'<div class="tt-r"><span>メモ</span><span>'+s.memo+'</span></div>':'')
+    +'<div style="margin-top:3px;font-size:9px;color:var(--text3);">ドラッグで日程調整 | クリックで編集</div>';
+  moveTT(e);
+}
+
+// ── FILTER VISIBILITY (legend toggles) ──
+function toggleFV(key) {
+  filterVis[key] = !filterVis[key];
+  const btn = document.getElementById('fv-' + key);
+  if (btn) btn.classList.toggle('fv-on', filterVis[key]);
+  render();
+}
+function applyFVButtons() {
+  Object.keys(filterVis).forEach(k => {
+    const btn = document.getElementById('fv-' + k);
+    if (btn) btn.classList.toggle('fv-on', filterVis[k]);
+  });
+}
+
+// ── CUSTOM EVENT LINES ──
+function addEventLine(chart,ev,cw,faint,product,evtIdx){
+  if(!ev||!ev.date||ev.date.length<8)return;
+  const d=new Date(ev.date);if(isNaN(d.getTime()))return;
+  const x=dateToX(ev.date)+DAY_W;if(x<-50||x>cw+50)return;// placed after the date
+  const color=ev.color||'#f97316';
+  // Wrapper for drag
+  const wrap=document.createElement('div');
+  wrap.style.cssText='position:absolute;top:0;bottom:0;left:'+x+'px;width:'+(faint?'8':'14')+'px;z-index:8;cursor:'+(faint?'default':'ew-resize')+';transform:translateX(-3px);';
+  const line=document.createElement('div');
+  line.style.cssText='position:absolute;top:0;bottom:0;left:3px;width:'+(faint?'1':'2')+'px;background:'+color+';opacity:'+(faint?'0.3':'1')+';pointer-events:none;';
+  wrap.appendChild(line);
+  if(!faint){
+    const flag=document.createElement('div');
+    flag.style.cssText='position:absolute;top:1px;left:5px;font-size:8px;font-weight:600;padding:1px 3px;border-radius:2px;background:'+color+';color:#fff;white-space:nowrap;max-width:80px;overflow:hidden;text-overflow:ellipsis;pointer-events:none;';
+    flag.textContent=ev.label||'イベント';
+    flag.title=(ev.label||'イベント')+'  '+fd(ev.date);
+    wrap.appendChild(flag);
+    // Make draggable
+    if(product!=null&&evtIdx!=null){
+      makeEventDraggable(wrap,ev,product,evtIdx,x);
+    }
+  }
+  chart.appendChild(wrap);
+}
+function makeEventDraggable(wrap,ev,product,evtIdx,startX){
+  let dragging=false,ox=0,sx=0;
+  const pop=document.getElementById('ddpop');
+  wrap.addEventListener('mousedown',function(e){
+    if(e.button!==0)return;
+    dragging=true;ox=parseInt(wrap.style.left)||startX;sx=e.clientX;
+    _drag=true;_wasDrag=false;
+    document.addEventListener('mousemove',onMove);
+    document.addEventListener('mouseup',onUp);
+    e.preventDefault();e.stopPropagation();
+  });
+  function onMove(e){
+    if(!dragging)return;
+    const dx=e.clientX-sx;
+    if(Math.abs(dx)>2){_wasDrag=true;}
+    const newX=Math.max(0,ox+dx);
+    wrap.style.left=newX+'px';
+    const newDate=xToDate(Math.round(newX/DAY_W)*DAY_W);
+    pop.textContent=(ev.label||'イベント')+': '+fd(newDate);
+    pop.style.display='block';pop.style.left=(e.clientX+12)+'px';pop.style.top=(e.clientY-28)+'px';
+  }
+  function onUp(e){
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+    pop.style.display='none';_drag=false;
+    if(!_wasDrag){setTimeout(()=>{_wasDrag=false;openEventModal(product,evtIdx);},10);return;}
+    // Snap to day and save
+    const newX=Math.max(0,parseInt(wrap.style.left)||startX);
+    const snapped=Math.round(newX/DAY_W)*DAY_W;
+    wrap.style.left=snapped+'px';
+    ev.date=xToDate(snapped);
+    if(!productMeta[product])productMeta[product]={};
+    if(!productMeta[product].events)productMeta[product].events=[];
+    productMeta[product].events[evtIdx]=ev;
+    saveData();setTimeout(()=>{_wasDrag=false;},150);setTimeout(()=>render(),60);
+  }
+}
+
+function ctxAddEvent(){const p=_ctxProduct;hideCtxMenu();if(p)openEventModal(p,null);}
+
+// ── EVENT MODAL ──
+let _evtProduct=null,_evtIdx=null;
+function openEventModal(product,idx){
+  _evtProduct=product;_evtIdx=idx;
+  const meta=productMeta[product]||{};
+  const evts=meta.events||[];
+  const ev=idx!==null&&idx!==undefined?evts[idx]:null;
+  document.getElementById('EV-product').textContent=product;
+  document.getElementById('EV-label').value=ev?ev.label:'';
+  document.getElementById('EV-date').value=ev?ev.date:'';
+  document.getElementById('EV-color').value=ev?ev.color:'#f97316';
+  document.getElementById('EV-del').style.display=ev?'':'none';
+  // Render existing events list
+  const list=document.getElementById('EV-list');
+  list.innerHTML='';
+  evts.forEach((e,i)=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:7px;padding:5px 9px;border-bottom:1px solid var(--border);font-size:11px;cursor:pointer;';
+    row.innerHTML='<span style="display:inline-block;width:10px;height:16px;background:'+e.color+';border-radius:2px;flex-shrink:0;"></span>'
+      +'<span style="flex:1;font-weight:500;">'+e.label+'</span>'
+      +'<span style="color:var(--text3);">'+fd(e.date)+'</span>';
+    row.addEventListener('click',()=>openEventModal(product,i));
+    row.addEventListener('mouseover',()=>row.style.background='var(--bg2)');
+    row.addEventListener('mouseout',()=>row.style.background='');
+    list.appendChild(row);
+  });
+  if(!evts.length)list.innerHTML='<div style="padding:7px 9px;font-size:11px;color:var(--text3);">イベントなし</div>';
+  document.getElementById('M-event').classList.add('open');
+  setTimeout(()=>document.getElementById('EV-label').focus(),50);
+}
+function saveEvent(){
+  const label=document.getElementById('EV-label').value.trim();
+  const date=document.getElementById('EV-date').value;
+  const color=document.getElementById('EV-color').value;
+  if(!label||!date){alert('イベント名と日付を入力してください');return;}
+  if(!productMeta[_evtProduct])productMeta[_evtProduct]={};
+  if(!productMeta[_evtProduct].events)productMeta[_evtProduct].events=[];
+  const ev={label,date,color};
+  if(_evtIdx!==null&&_evtIdx!==undefined){
+    productMeta[_evtProduct].events[_evtIdx]=ev;
+  } else {
+    productMeta[_evtProduct].events.push(ev);
+  }
+  saveData();closeModal('M-event');render();showToast('イベントを保存しました');
+}
+function deleteEvent(){
+  if(_evtIdx===null||_evtIdx===undefined)return;
+  if(!confirm('このイベントを削除しますか？'))return;
+  productMeta[_evtProduct].events.splice(_evtIdx,1);
+  saveData();closeModal('M-event');render();showToast('削除しました');
+}
+
+// ── TASK CONTEXT MENU ──
+let _ctxTaskId = null;
+function showTaskCtxMenu(e,id){
+  _ctxTaskId=id;
+  const m=document.getElementById('taskCtxMenu');
+  m.style.display='block';m.style.left='0';m.style.top='0';
+  const mw=m.offsetWidth||160,mh=m.offsetHeight||100;
+  const x=e.clientX+mw>window.innerWidth?e.clientX-mw:e.clientX;
+  const y=e.clientY+mh>window.innerHeight?e.clientY-mh:e.clientY;
+  m.style.left=x+'px';m.style.top=y+'px';
+  e.stopPropagation();
+}
+function hideTaskCtxMenu(){document.getElementById('taskCtxMenu').style.display='none';_ctxTaskId=null;}
+document.addEventListener('click',hideTaskCtxMenu);
+function taskCtxEdit(){const id=_ctxTaskId;hideTaskCtxMenu();if(id)openEditTask(id);}
+function taskCtxDelete(){
+  const id=_ctxTaskId;hideTaskCtxMenu();if(!id)return;
+  const t=tasks.find(x=>x.id===id);if(!t)return;
+  if(!confirm('「'+t.product+' / '+t.task+'」を削除しますか？'))return;
+  tasks=tasks.filter(x=>x.id!==id);
+  // If product has no tasks left, remove from productOrder
+  if(!tasks.some(x=>x.product===t.product)){
+    productOrder=productOrder.filter(p=>p!==t.product);
+    delete productSales[t.product];delete productMeta[t.product];
+  }
+  saveData();buildAll();showToast('削除しました');
+}
+function taskCtxDup(){const id=_ctxTaskId;hideTaskCtxMenu();if(!id)return;const t=tasks.find(x=>x.id===id);if(!t)return;const nt=Object.assign({},t,{id:Date.now()+Math.random(),progress:0});const idx=tasks.findIndex(x=>x.id===id);tasks.splice(idx+1,0,nt);saveData();buildAll();showToast('複製しました');}
+function buildAll(){
+  try {
+    if(!SD||!ED||isNaN(SD.getTime())||isNaN(ED.getTime()))initDates();
+    calcDayW();buildHeader();render();try{applyFVButtons();}catch(e){}
+    // Scroll to today (first time only per session)
+    const cc=document.getElementById('chartCol');
+    if(cc&&!cc._scrolled){
+      const _rba=getFullRange();
+      const todayPx=Math.round((TODAY-_rba.fSD)/86400000)*DAY_W;
+      cc.scrollLeft=Math.max(0,todayPx-cc.clientWidth*0.3);
+      cc._scrolled=true;
+    }
+  } catch(e) {
+    console.error('buildAll error:',e);
+    document.getElementById('labelRows').innerHTML='';
+    document.getElementById('chartRows').innerHTML='';
+  }
+}
+window.addEventListener('resize',()=>buildAll());
+// Today label
+const td2=TODAY;document.getElementById('todayLabel').textContent=`${td2.getFullYear()}年${td2.getMonth()+1}月${td2.getDate()}日（${DAY_NAMES[td2.getDay()]}）`;
+// View mode buttons
+['day','week','month','quarter'].forEach(v=>{const el=document.getElementById('vs-'+v);if(el)el.classList.remove('active-seg');});const vsEl=document.getElementById('vs-'+viewMode);if(vsEl)vsEl.classList.add('active-seg');
+
+try {
+  loadData();
+} catch(e) {
+  console.warn('loadData failed, using defaults:', e);
+  loadDefaults();
+}
+try { initDates(); } catch(e) {}
+try { syncRangeInputs(); } catch(e) {}
+try { updateSalesFilter(); } catch(e) {}
+try { updateDashFilters(); } catch(e) {}
+try { buildAll(); } catch(e) { console.error('buildAll failed:', e); }
+try { initDragScroll(document.getElementById('chartCol')); } catch(e) {}
+try { restoreLabelWidth(); } catch(e) {}
+try { initLabelResize(); } catch(e) {}
+try { document.getElementById('stepBar').style.display='flex'; } catch(e) {}
+
+// ================================================================
+// SHAREPOINT SYNC
+// ================================================================
+const SP_URL_KEY = 'gantt_sp_url';
+
+function openSyncModal() {
+  const saved = localStorage.getItem(SP_URL_KEY) || '';
+  document.getElementById('SP-url').value = saved;
+  document.getElementById('sync-result').style.display = 'none';
+  document.getElementById('M-sync').classList.add('open');
+}
+
+function saveSyncUrl() {
+  const url = document.getElementById('SP-url').value.trim();
+  if (!url) { showResult('URLを入力してください', 'err'); return; }
+  localStorage.setItem(SP_URL_KEY, url);
+  // Trigger fetch immediately
+  fetchFromSP(url);
+}
+
+function testSyncUrl() {
+  const url = document.getElementById('SP-url').value.trim();
+  if (!url) { showResult('URLを入力してください', 'err'); return; }
+  showResult('接続中...', 'ing');
+  fetchFromSP(url, true);
+}
+
+function fetchFromSP(url, testOnly) {
+  // Convert SharePoint share URL to direct download URL if needed
+  const fetchUrl = convertSPUrl(url);
+  showResult('データを取得中...', 'ing');
+
+  fetch(fetchUrl, { mode: 'cors', cache: 'no-cache' })
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status + ' — ファイルが見つからないか、アクセスが拒否されました');
+      return res.json();
+    })
+    .then(function(d) {
+      if (testOnly) {
+        showResult('✓ 接続成功！JSONファイルを読み込めます。「URLを保存して同期」を押してください。', 'ok');
+        return;
+      }
+      // Load data
+      tasks = Array.isArray(d.tasks) ? d.tasks.filter(function(t){ return t && t.product && t.task; }) : tasks;
+      if (d.soonItems !== undefined) soonItems = d.soonItems || [];
+      else if (d.sooni !== undefined) soonItems = d.sooni || [];
+      productOrder = d.productOrder || d.po || productOrder;
+      productSales = d.productSales || d.ps || productSales;
+      productMeta = d.productMeta || d.pm || productMeta;
+      holidays = d.holidays || d.hols || holidays;
+      if (!productOrder.length) productOrder = [...new Set(tasks.map(function(t){ return t.product; }))];
+      showResult('✓ 最新データを取得しました（' + tasks.length + '件の工程）', 'ok');
+      saveData();
+      updateSalesFilter();
+      updateDashFilters();
+      buildAll();
+      // Update sync indicator in topnav
+      updateSyncBadge(true);
+    })
+    .catch(function(err) {
+      showResult('✗ エラー: ' + err.message + '\n\nSharePointの共有設定で「リンクを知っている全員が閲覧可能」に設定されているか確認してください。', 'err');
+      updateSyncBadge(false);
+    });
+}
+
+function convertSPUrl(url) {
+  // SharePoint share URLs need to be converted to direct download URLs
+  // Pattern: https://xxx.sharepoint.com/:x:/r/... → direct URL
+  // For direct JSON files, the URL usually works as-is
+  // Remove any query params that might cause issues and try to get raw content
+  if (url.includes('sharepoint.com') && url.includes('/_layouts/')) {
+    return url; // Already a direct URL
+  }
+  if (url.includes('sharepoint.com') && !url.includes('download=1')) {
+    // Try adding download=1 parameter
+    const sep = url.includes('?') ? '&' : '?';
+    return url + sep + 'download=1';
+  }
+  return url;
+}
+
+function showResult(msg, type) {
+  const el = document.getElementById('sync-result');
+  el.style.display = 'block';
+  el.className = 'sync-status sync-' + type;
+  el.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:var(--r);font-size:12px;white-space:pre-wrap;';
+  if (type === 'ok') { el.style.background = '#dcfce7'; el.style.color = '#166534'; }
+  else if (type === 'err') { el.style.background = '#fee2e2'; el.style.color = '#991b1b'; }
+  else { el.style.background = '#e0f2fe'; el.style.color = '#075985'; }
+  el.textContent = msg;
+}
+
+function updateSyncBadge(ok) {
+  const btn = document.querySelector('.btn-sync');
+  if (!btn) return;
+  if (ok) {
+    const now = new Date();
+    btn.innerHTML = '<i class="ti ti-cloud-check"></i> 同期済 ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    btn.style.background = '#dcfce7'; btn.style.color = '#166534';
+  } else {
+    btn.innerHTML = '<i class="ti ti-cloud-x"></i> 同期エラー';
+    btn.style.background = '#fee2e2'; btn.style.color = '#991b1b';
+  }
+}
+
+// Auto-sync on load if URL is saved (skip on file:// protocol)
+(function autoSync() {
+  if (location.protocol === 'file:') return; // file://では自動同期しない
+  const url = localStorage.getItem(SP_URL_KEY);
+  if (url) {
+    const btn = document.querySelector('.btn-sync');
+    if (btn) { btn.innerHTML = '<i class="ti ti-cloud-download"></i> 同期中...'; }
+    setTimeout(function() { fetchFromSP(url, false); }, 1500);
+  }
+})();
+</script>
+
+<!-- SharePoint同期モーダル -->
+<div class="modal-bg" id="M-sync">
+  <div class="modal" style="width:480px;">
+    <h3><i class="ti ti-cloud" style="color:#166534;"></i> SharePoint同期設定</h3>
+    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:var(--r);padding:10px 12px;margin-bottom:12px;font-size:12px;color:#166534;">
+      <i class="ti ti-info-circle"></i> SharePointに保存したJSONファイルのURLを設定すると、ボタン1つで最新データを取得できます。
+    </div>
+
+    <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;text-transform:uppercase;">SharePoint JSONファイルのURL</label>
+    <input id="SP-url" type="text" style="width:100%;padding:7px 10px;font-size:12px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);" placeholder="https://会社名.sharepoint.com/.../gantt_data.json">
+    <div style="font-size:10px;color:var(--text3);margin-top:4px;">SharePoint上のJSONファイルを右クリック→「リンクのコピー」で取得できます</div>
+
+    <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px;">
+      <div style="font-size:12px;font-weight:600;margin-bottom:8px;">同期モード</div>
+      <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;font-size:12px;">
+        <input type="radio" name="syncMode" id="SM-viewer" value="viewer" checked>
+        <span><b>閲覧モード</b> — SharePointから最新データを取得して表示（自分のデータは変わりません）</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;">
+        <input type="radio" name="syncMode" id="SM-editor" value="editor">
+        <span><b>編集モード</b> — エクスポートしたJSONをSharePointに保存するURLを案内します</span>
+      </label>
+    </div>
+
+    <div id="sync-result" style="display:none;margin-top:10px;padding:8px 12px;border-radius:var(--r);font-size:12px;"></div>
+
+    <div style="margin-top:14px;background:var(--bg2);border-radius:var(--r);padding:10px 12px;">
+      <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:6px;">📋 SharePoint設定手順</div>
+      <ol style="font-size:11px;color:var(--text2);padding-left:16px;line-height:1.8;">
+        <li>SharePointの共有フォルダに <code style="background:var(--bg3);padding:1px 4px;border-radius:3px;">gantt_data.json</code> をアップロード</li>
+        <li>ファイルを右クリック →「リンクのコピー」</li>
+        <li>上のURLフィールドに貼り付け</li>
+        <li>「URLを保存」ボタンを押す</li>
+        <li>以後「SharePoint同期」ボタンで最新データを取得</li>
+      </ol>
+      <div style="font-size:10px;color:var(--text3);margin-top:6px;">※ SharePointの共有設定で「リンクを知っている全員」に閲覧権限を付与してください</div>
+    </div>
+
+    <div class="mbtns">
+      <button onclick="testSyncUrl()" style="margin-right:auto;"><i class="ti ti-plug"></i> 接続テスト</button>
+      <button onclick="closeModal('M-sync')">閉じる</button>
+      <button class="btn-p" onclick="saveSyncUrl()"><i class="ti ti-check"></i> URLを保存して同期</button>
+    </div>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div class="modal-bg" id="M-event">
+  <div class="modal" style="width:420px;">
+    <h3><i class="ti ti-flag" style="color:#f97316;"></i> イベントを追加 — <span id="EV-product" style="color:var(--blue);"></span></h3>
+    <!-- existing events -->
+    <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;text-transform:uppercase;">登録済みイベント</div>
+    <div id="EV-list" style="border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;max-height:120px;overflow-y:auto;"></div>
+    <!-- new/edit form -->
+    <div style="background:var(--bg2);border-radius:var(--r);padding:10px;">
+      <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:8px;" id="EV-form-title">新しいイベント</div>
+      <label>イベント名 <span style="color:var(--red);">*</span></label>
+      <input id="EV-label" type="text" placeholder="例: キャビ出荷日、金型検査、客先確認">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px;">
+        <div>
+          <label>日付 <span style="color:var(--red);">*</span></label>
+          <input id="EV-date" type="date">
+        </div>
+        <div>
+          <label>色</label>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+            <input id="EV-color" type="color" value="#f97316" style="width:40px;height:32px;padding:2px;border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;">
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span onclick="document.getElementById('EV-color').value='#f97316'" style="display:inline-block;width:18px;height:18px;background:#f97316;border-radius:3px;cursor:pointer;" title="オレンジ"></span>
+              <span onclick="document.getElementById('EV-color').value='#e24b4a'" style="display:inline-block;width:18px;height:18px;background:#e24b4a;border-radius:3px;cursor:pointer;" title="赤"></span>
+              <span onclick="document.getElementById('EV-color').value='#185fa5'" style="display:inline-block;width:18px;height:18px;background:#185fa5;border-radius:3px;cursor:pointer;" title="青"></span>
+              <span onclick="document.getElementById('EV-color').value='#0f6e56'" style="display:inline-block;width:18px;height:18px;background:#0f6e56;border-radius:3px;cursor:pointer;" title="緑"></span>
+              <span onclick="document.getElementById('EV-color').value='#534ab7'" style="display:inline-block;width:18px;height:18px;background:#534ab7;border-radius:3px;cursor:pointer;" title="紫"></span>
+              <span onclick="document.getElementById('EV-color').value='#854f0b'" style="display:inline-block;width:18px;height:18px;background:#854f0b;border-radius:3px;cursor:pointer;" title="茶"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mbtns">
+      <button class="danger-btn" id="EV-del" onclick="deleteEvent()" style="display:none;margin-right:auto;"><i class="ti ti-trash"></i> 削除</button>
+      <button onclick="closeModal('M-event')">キャンセル</button>
+      <button class="primary" onclick="saveEvent()"><i class="ti ti-check"></i> 保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Task Context Menu -->
+<div id="taskCtxMenu" style="position:fixed;display:none;background:var(--bg);border:1px solid var(--border2);border-radius:var(--r);box-shadow:0 4px 14px rgba(0,0,0,.14);z-index:9001;min-width:150px;overflow:hidden;">
+  <div class="ctx-item" onclick="taskCtxEdit()"><i class="ti ti-edit"></i> 工程を編集</div>
+  <div class="ctx-item" onclick="taskCtxDup()"><i class="ti ti-copy"></i> 複製</div>
+  <div style="height:1px;background:var(--border);"></div>
+  <div class="ctx-item" style="color:var(--red);" onclick="taskCtxDelete()"><i class="ti ti-trash"></i> 削除</div>
+</div>
+</body>
+</html>
