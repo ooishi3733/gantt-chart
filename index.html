@@ -212,6 +212,7 @@ select,input[type=date]{font-size:12px;padding:4px 8px;border:1px solid var(--bo
   <button class="tab-btn" id="tab-dash" onclick="switchTab('dash')"><i class="ti ti-dashboard"></i> ダッシュボード</button>
   <div class="topnav-right">
     <button onclick="exportJSON()"><i class="ti ti-download"></i> エクスポート</button>
+    <button onclick="openGithubSaveModal()" style="background:#f0fdf4;color:#166534;border-color:#86efac;"><i class="ti ti-brand-github"></i> GitHubに保存</button>
     <button onclick="document.getElementById('importInput').click()"><i class="ti ti-upload"></i> インポート</button>
     <input type="file" id="importInput" accept=".json" style="display:none" onchange="importJSON(event)">
     <button id="shareBadge" onclick="refreshSharedData()" title="クリックで最新の共有データを取得" style="font-size:11px;padding:3px 9px;border:1px solid var(--border2);border-radius:10px;cursor:pointer;color:var(--text3);background:transparent;display:inline-flex;align-items:center;gap:4px;"><i class="ti ti-cloud"></i> 読込中...</button>
@@ -1619,6 +1620,30 @@ function refreshSharedData() {
     autoLoadSharedData(true);
   }
 }
+
+// ================================================================
+// GITHUB SAVE (editor helper)
+// ================================================================
+const GH_REPO_KEY = 'gantt_gh_repo';
+function openGithubSaveModal(){
+  document.getElementById('GH-repo').value = localStorage.getItem(GH_REPO_KEY) || '';
+  document.getElementById('M-github').classList.add('open');
+}
+function doGithubSave(){
+  const repo = document.getElementById('GH-repo').value.trim().replace(/^https?:\/\/github\.com\//,'').replace(/\/$/,'');
+  if(!repo || repo.indexOf('/') < 0){
+    alert('「ユーザー名/リポジトリ名」の形式で入力してください（例: ooishi3733/gantt-chart）');
+    return;
+  }
+  localStorage.setItem(GH_REPO_KEY, repo);
+  // 1. Export data (download gantt_data.json)
+  exportJSON();
+  // 2. Open GitHub edit/upload page for gantt_data.json
+  const url = 'https://github.com/' + repo + '/upload/main';
+  setTimeout(function(){ window.open(url, '_blank'); }, 300);
+  closeModal('M-github');
+  showToast('データをダウンロードしました。GitHubページでアップロードしてください');
+}
 function buildAll(){
   try {
     if(!SD||!ED||isNaN(SD.getTime())||isNaN(ED.getTime()))initDates();
@@ -1870,6 +1895,36 @@ function updateSyncBadge(ok) {
   <div class="ctx-item" onclick="taskCtxDup()"><i class="ti ti-copy"></i> 複製</div>
   <div style="height:1px;background:var(--border);"></div>
   <div class="ctx-item" style="color:var(--red);" onclick="taskCtxDelete()"><i class="ti ti-trash"></i> 削除</div>
+</div>
+
+<!-- GITHUB SAVE MODAL -->
+<div class="modal-bg" id="M-github">
+  <div class="modal" style="width:480px;">
+    <h3><i class="ti ti-brand-github"></i> GitHubに保存（編集者用）</h3>
+    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:var(--r);padding:10px 12px;margin-bottom:12px;font-size:12px;color:#166534;line-height:1.6;">
+      <i class="ti ti-info-circle"></i> 下のボタンを押すと、①最新データがダウンロードされ、②GitHubの編集ページが開きます。ダウンロードした <code style="background:#dcfce7;padding:1px 4px;border-radius:3px;">gantt_data.json</code> をドラッグ＆ドロップして「Commit changes」を押せば全員に反映されます。
+    </div>
+
+    <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;text-transform:uppercase;">GitHubリポジトリ</label>
+    <input id="GH-repo" type="text" style="width:100%;padding:7px 10px;font-size:12px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);" placeholder="例: ooishi3733/gantt-chart">
+    <div style="font-size:10px;color:var(--text3);margin-top:4px;">「ユーザー名/リポジトリ名」の形式で入力（初回のみ・保存されます）</div>
+
+    <div style="margin-top:16px;background:var(--bg2);border-radius:var(--r);padding:12px;">
+      <div style="font-size:12px;font-weight:600;margin-bottom:8px;">📋 保存手順</div>
+      <ol style="font-size:11px;color:var(--text2);padding-left:18px;line-height:1.9;margin:0;">
+        <li>下の「データDL＆GitHubを開く」ボタンをクリック</li>
+        <li><code style="background:var(--bg3);padding:1px 4px;border-radius:3px;">gantt_data.json</code> がダウンロードされる</li>
+        <li>開いたGitHubページにファイルをドラッグ＆ドロップ</li>
+        <li>「Commit changes」ボタンをクリック</li>
+        <li>1〜2分後、全員のページに自動反映されます</li>
+      </ol>
+    </div>
+
+    <div class="mbtns">
+      <button onclick="closeModal('M-github')">閉じる</button>
+      <button class="primary" onclick="doGithubSave()" style="background:#166534;"><i class="ti ti-brand-github"></i> データDL＆GitHubを開く</button>
+    </div>
+  </div>
 </div>
 </body>
 </html>
