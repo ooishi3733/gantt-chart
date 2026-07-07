@@ -214,7 +214,7 @@ select,input[type=date]{font-size:12px;padding:4px 8px;border:1px solid var(--bo
     <button onclick="exportJSON()"><i class="ti ti-download"></i> エクスポート</button>
     <button onclick="document.getElementById('importInput').click()"><i class="ti ti-upload"></i> インポート</button>
     <input type="file" id="importInput" accept=".json" style="display:none" onchange="importJSON(event)">
-    <button class="btn-sync" onclick="openSyncModal()" title="SharePointと同期"><i class="ti ti-cloud"></i> SharePoint同期</button>
+    <button id="shareBadge" onclick="refreshSharedData()" title="クリックで最新の共有データを取得" style="font-size:11px;padding:3px 9px;border:1px solid var(--border2);border-radius:10px;cursor:pointer;color:var(--text3);background:transparent;display:inline-flex;align-items:center;gap:4px;"><i class="ti ti-cloud"></i> 読込中...</button>
     <div style="text-align:right;">
       <div style="font-size:11px;color:var(--text2);white-space:nowrap;"><strong id="todayLabel"></strong></div>
       <div style="font-size:9px;color:var(--text3);white-space:nowrap;" id="lastSavedLabel">—</div>
@@ -609,7 +609,16 @@ function workdays(s,e){
 }
 function addWD(ds,wd){let c=0;const _pp=String(ds).split('-');const d=_pp.length>=3?new Date(+_pp[0],+_pp[1]-1,+_pp[2]):new Date(ds);while(c<wd){d.setDate(d.getDate()+1);if(!isOff(fi(d)))c++;}return fi(d);}
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
-function exportJSON(){const b=new Blob([JSON.stringify({tasks,soonItems,productOrder,productSales,productMeta,collapsed,holdingOpen,holidays},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const n=new Date();a.download=`gantt_${n.getFullYear()}${String(n.getMonth()+1).padStart(2,'0')}${String(n.getDate()).padStart(2,'0')}.json`;a.click();showToast('エクスポートしました');}
+function exportJSON(){
+  const now=Date.now();
+  const data={tasks,soonItems,productOrder,productSales,productMeta,collapsed,soonCollapsed,holdingOpen,holidays,_savedAt:now};
+  const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='gantt_data.json';
+  a.click();
+  localStorage.setItem('gantt_data_time',now);
+  showToast('gantt_data.json をエクスポートしました');
+}
 function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);tasks=d.tasks||[];soonItems=d.soonItems||[];productOrder=d.productOrder||[...new Set(tasks.map(t=>t.product))];productSales=d.productSales||{};productMeta=d.productMeta||{};collapsed=d.collapsed||{};holdingOpen=d.holdingOpen!==undefined?d.holdingOpen:true;holidays=d.holidays||{};saveData();buildAll();showToast('インポートしました');}catch(err){showToast('読み込みエラー');}};r.readAsText(f);e.target.value='';}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
@@ -1534,6 +1543,82 @@ function taskCtxDelete(){
   saveData();buildAll();showToast('削除しました');
 }
 function taskCtxDup(){const id=_ctxTaskId;hideTaskCtxMenu();if(!id)return;const t=tasks.find(x=>x.id===id);if(!t)return;const nt=Object.assign({},t,{id:Date.now()+Math.random(),progress:0});const idx=tasks.findIndex(x=>x.id===id);tasks.splice(idx+1,0,nt);saveData();buildAll();showToast('複製しました');}
+
+// ================================================================
+// AUTO-LOAD SHARED DATA (gantt_data.json in same folder)
+// ================================================================
+// 閲覧者は同じフォルダの gantt_data.json を自動読み込み（GitHub Pages運用）
+const SHARED_DATA_URL = './gantt_data.json';
+let _autoLoadDone = false;
+
+function autoLoadSharedData(showMsg) {
+  // file:// では動かないのでスキップ
+  if (location.protocol === 'file:') {
+    if (showMsg) showToast('ローカルファイルでは自動読み込みできません');
+    return;
+  }
+  fetch(SHARED_DATA_URL, { cache: 'no-cache' })
+    .then(function(res) {
+      if (!res.ok) throw new Error('not found');
+      return res.json();
+    })
+    .then(function(d) {
+      // Compare timestamps: only load if shared data is newer than local
+      const sharedTime = d._savedAt || 0;
+      const localTime = parseInt(localStorage.getItem('gantt_data_time') || '0');
+      if (!showMsg && sharedTime && localTime && sharedTime <= localTime) {
+        // Local is same or newer — skip auto-load to avoid overwriting local edits
+        updateShareBadge('local');
+        return;
+      }
+      // Load shared data
+      tasks = Array.isArray(d.tasks) ? d.tasks.filter(function(t){ return t && t.product && t.task; }) : tasks;
+      soonItems = d.soonItems || [];
+      productOrder = d.productOrder || productOrder;
+      productSales = d.productSales || productSales;
+      productMeta = d.productMeta || productMeta;
+      holidays = d.holidays || holidays;
+      if (!productOrder.length) productOrder = [...new Set(tasks.map(function(t){ return t.product; }))];
+      if (sharedTime) localStorage.setItem('gantt_data_time', sharedTime);
+      saveData();
+      try { updateSalesFilter(); } catch(e) {}
+      try { updateDashFilters(); } catch(e) {}
+      buildAll();
+      updateShareBadge('synced', d._savedAt);
+      if (showMsg) showToast('✓ 最新データを取得しました（' + tasks.length + '件）');
+      _autoLoadDone = true;
+    })
+    .catch(function(err) {
+      // gantt_data.json が無い場合はローカルデータで動作（初回など）
+      updateShareBadge('none');
+      if (showMsg) showToast('共有データが見つかりません（gantt_data.json 未配置）');
+    });
+}
+
+function updateShareBadge(state, savedAt) {
+  const btn = document.getElementById('shareBadge');
+  if (!btn) return;
+  if (state === 'synced') {
+    let timeStr = '';
+    if (savedAt) { const dt = new Date(savedAt); timeStr = ' ' + (dt.getMonth()+1) + '/' + dt.getDate() + ' ' + String(dt.getHours()).padStart(2,'0') + ':' + String(dt.getMinutes()).padStart(2,'0'); }
+    btn.innerHTML = '<i class="ti ti-cloud-check"></i> 最新版' + timeStr;
+    btn.style.background = '#dcfce7'; btn.style.color = '#166534'; btn.style.borderColor = '#86efac';
+  } else if (state === 'local') {
+    btn.innerHTML = '<i class="ti ti-device-laptop"></i> ローカル編集中';
+    btn.style.background = '#fef9c3'; btn.style.color = '#854d0e'; btn.style.borderColor = '#fde047';
+  } else {
+    btn.innerHTML = '<i class="ti ti-cloud-off"></i> 共有データなし';
+    btn.style.background = ''; btn.style.color = 'var(--text3)'; btn.style.borderColor = 'var(--border2)';
+  }
+}
+
+// Manual refresh (click badge to force reload shared data)
+function refreshSharedData() {
+  if (confirm('共有サーバーから最新データを取得しますか？\n（現在のローカル編集内容は上書きされます）')) {
+    localStorage.removeItem('gantt_data_time');
+    autoLoadSharedData(true);
+  }
+}
 function buildAll(){
   try {
     if(!SD||!ED||isNaN(SD.getTime())||isNaN(ED.getTime()))initDates();
@@ -1569,6 +1654,7 @@ try { syncRangeInputs(); } catch(e) {}
 try { updateSalesFilter(); } catch(e) {}
 try { updateDashFilters(); } catch(e) {}
 try { buildAll(); } catch(e) { console.error('buildAll failed:', e); }
+try { setTimeout(function(){ autoLoadSharedData(false); }, 800); } catch(e) {}
 try { initDragScroll(document.getElementById('chartCol')); } catch(e) {}
 try { restoreLabelWidth(); } catch(e) {}
 try { initLabelResize(); } catch(e) {}
