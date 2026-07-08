@@ -265,6 +265,9 @@ select,input[type=date]{font-size:12px;padding:4px 8px;border:1px solid var(--bo
     <button id="fv-洗浄"  onclick="toggleFV('洗浄')"  class="fv-btn fv-on" style="--fvc:#993556;"><span class="fv-dot"></span>洗浄</button>
     <button id="fv-納期"  onclick="toggleFV('納期')"  class="fv-btn fv-on" style="--fvc:#e24b4a;"><span class="fv-dot" style="border-radius:1px;height:4px;margin-top:1px;"></span>納期</button>
     <button id="fv-商品化待ち" onclick="toggleFV('商品化待ち')" class="fv-btn fv-on" style="--fvc:#854f0b;"><span class="fv-dot" style="background:transparent;border:1.5px dashed #854f0b;"></span>商品化待ち</button>
+    <button id="fv-イベント" onclick="toggleFV('イベント')" class="fv-btn fv-on" style="--fvc:#f97316;"><span class="fv-dot" style="border-radius:1px;width:3px;height:10px;"></span>イベント</button>
+    <div class="sep" style="height:14px;"></div>
+    <button id="fv-completed" onclick="toggleHideCompleted()" class="fv-btn fv-on" style="--fvc:#5f5e5a;"><span class="fv-dot" style="background:#aaa;"></span>完了工程</button>
     <div class="sep" style="height:14px;"></div>
     <div class="legend-item"><span style="display:inline-block;width:10px;height:10px;background:#fff0f0;border:1px solid #ecc;border-radius:2px;"></span> 日</div>
     <div class="legend-item"><span style="display:inline-block;width:10px;height:10px;background:#f0f4ff;border:1px solid #cce;border-radius:2px;"></span> 土</div>
@@ -519,7 +522,8 @@ let collapsed={},soonCollapsed=false,holdingOpen=true,holidays={};
 let editingTaskId=null,editingSoonId=null;
 let viewMode='week',SD,ED,DAY_W=24;
 let _drag=false,_wasDrag=false,dashPeriod='year';
-let filterVis={切削:true,穴あけ:true,研磨:true,洗浄:true,納期:true,商品化待ち:true};
+let filterVis={切削:true,穴あけ:true,研磨:true,洗浄:true,納期:true,商品化待ち:true,イベント:true};
+let hideCompleted=false;
 // Step2 temp state
 let newProdData=null,newTasks=[];
 let copySelected=[];
@@ -772,13 +776,14 @@ function render(){
     // PARENT CHART
     const pCr=document.createElement('div');pCr.className='chart-row pcrow';pCr.style.cssText=`height:${ROW_H}px;width:${cw}px;position:relative;`;addColBg(pCr);addTodayLine(pCr);addDeadlineLine(pCr,deadline,cw,product);
     // Custom events
-    ((productMeta[product]&&productMeta[product].events)||[]).forEach((ev,ei)=>addEventLine(pCr,ev,cw,false,product,ei));
+    if(filterVis['イベント']!==false)((productMeta[product]&&productMeta[product].events)||[]).forEach((ev,ei)=>addEventLine(pCr,ev,cw,false,product,ei));
     const pbx=Math.max(0,dateToX(fi(allS)));const pbw=Math.min(Math.max(DAY_W,dateToX(fi(allE))-pbx+DAY_W),cw-pbx);
     if(pbw>0){const pb=document.createElement('div');pb.className='gbar pbar';pb.style.cssText=`left:${pbx}px;width:${pbw}px;`;const txt=pbw>80?`全体${overProg}% | ${calD}日(実${wds}日)`:pbw>40?`${overProg}%`:'';pb.innerHTML=`<div class="pf" style="width:${overProg}%;background:#aaa;opacity:1;"></div><span class="blt" style="font-size:8px;color:#3a3a38;font-weight:700;">${txt}</span>`;pCr.appendChild(pb);}
     crEl.appendChild(pCr);
     if(!isCol){
       ptasks.forEach(t=>{
         if(filterVis[t.task]===false)return; // レーンごと非表示
+        if(hideCompleted&&t.progress===100)return; // 完了工程を非表示
         const cLbl=document.createElement('div');cLbl.className='label-row';cLbl.style.height=ROW_H+'px';
         cLbl.draggable=true;
         cLbl.dataset.taskId=t.id;
@@ -801,7 +806,7 @@ function render(){
         const tn=document.createElement('div');tn.style.cssText='font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;';tn.textContent=t.task+(t.machine?` (${t.machine})`:'');
         cLbl.appendChild(clr);cLbl.appendChild(tn);lrEl.appendChild(cLbl);
         const cCr=document.createElement('div');cCr.className='chart-row';cCr.style.cssText=`height:${ROW_H}px;width:${cw}px;position:relative;`;addColBg(cCr);addTodayLine(cCr);
-        ((productMeta[product]&&productMeta[product].events)||[]).forEach(ev=>addEventLine(cCr,ev,cw,true,null,null));
+        if(filterVis['イベント']!==false)((productMeta[product]&&productMeta[product].events)||[]).forEach(ev=>addEventLine(cCr,ev,cw,true,null,null));
         if(deadline){const dx2=dateToX(deadline);if(dx2>0&&dx2<cw){const dl2=document.createElement('div');dl2.style.cssText='position:absolute;top:0;bottom:0;left:'+dx2+'px;width:1px;background:rgba(226,75,74,.18);z-index:5;pointer-events:none;';cCr.appendChild(dl2);}}
         const color=gc(t.task);const bx0=dateToX(t.start);const bw0=Math.max(DAY_W,dateToX(t.end)-bx0+DAY_W);const bxC=Math.max(0,bx0);const bwC=Math.min(bw0-(bxC-bx0),cw-bxC);
         if(bwC>0&&filterVis[t.task]!==false){const wdT=workdays(t.start,t.end);let mbadge='';if(t.machine&&t.task==='切削'){const ms=MCH_STYLES[t.machine];if(ms)mbadge=`<span style="background:${ms.bg};color:${ms.text};font-size:8px;padding:0 3px;border-radius:3px;font-weight:700;margin-right:2px;flex-shrink:0;">${t.machine}</span>`;}const lbl=bwC>60?`${t.task} ${t.progress}%`:bwC>30?`${t.progress}%`:'';
@@ -1386,6 +1391,13 @@ function showSoonTip(e,s){
 }
 
 // ── FILTER VISIBILITY (legend toggles) ──
+
+function toggleHideCompleted(){
+  hideCompleted=!hideCompleted;
+  const btn=document.getElementById('fv-completed');
+  if(btn)btn.classList.toggle('fv-on',!hideCompleted);
+  render();
+}
 function toggleFV(key) {
   filterVis[key] = !filterVis[key];
   const btn = document.getElementById('fv-' + key);
@@ -1397,6 +1409,8 @@ function applyFVButtons() {
     const btn = document.getElementById('fv-' + k);
     if (btn) btn.classList.toggle('fv-on', filterVis[k]);
   });
+  const cbtn=document.getElementById('fv-completed');
+  if(cbtn)cbtn.classList.toggle('fv-on',!hideCompleted);
 }
 
 // ── CUSTOM EVENT LINES ──
