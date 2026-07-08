@@ -749,6 +749,8 @@ function render(){
   if(fSales)prods=prods.sort((a,b)=>(productSales[a]||'').localeCompare(productSales[b]||'','ja'));
   prods.forEach(product=>{
     const ptasks=groups[product];const isCol=collapsed[product];
+    // 完了非表示: 全工程が100%完了した製品はレーンごと非表示
+    if(hideCompleted&&ptasks.length>0&&ptasks.every(t=>t.progress===100))return;
     const allS=ptasks.map(t=>new Date(t.start)).reduce((a,b)=>a<b?a:b);
     const allE=ptasks.map(t=>new Date(t.end)).reduce((a,b)=>a>b?a:b);
     const meta=productMeta[product]||{};const deadline=meta.deadline||ptasks.map(t=>t.deadline).filter(Boolean).sort().pop()||'';
