@@ -691,7 +691,7 @@ function addTodayLine(chart){if(!SD||isNaN(SD.getTime()))return;const {fSD:_tSD}
 function addDeadlineLine(chart,dl,cw,product){
   if(!dl||dl.length<8||filterVis['納期']===false)return;
   const _dltest=new Date(dl);if(isNaN(_dltest.getTime()))return;
-  const dx=dateToX(dl)+DAY_W;if(dx<-50||dx>cw+50)return;// placed after the date
+  const dx=dateToX(dl);if(dx<-50||dx>cw+50)return;// placed at date head (left edge)
   // Wrapper for drag (14px wide, centered on line)
   const wrap=document.createElement('div');
   wrap.style.cssText='position:absolute;top:0;bottom:0;left:'+(dx-6)+'px;width:14px;z-index:8;cursor:ew-resize;';
@@ -1419,7 +1419,7 @@ function applyFVButtons() {
 function addEventLine(chart,ev,cw,faint,product,evtIdx){
   if(!ev||!ev.date||ev.date.length<8)return;
   const d=new Date(ev.date);if(isNaN(d.getTime()))return;
-  const x=dateToX(ev.date)+DAY_W;if(x<-50||x>cw+50)return;// placed after the date
+  const x=dateToX(ev.date);if(x<-50||x>cw+50)return;// placed at date head (left edge)
   const color=ev.color||'#f97316';
   // Wrapper for drag
   const wrap=document.createElement('div');
